@@ -9,8 +9,12 @@ Screed is a frontend for the amazing mining-pool software [foundation-server](ht
 ### Setup
 
 #### Using docker
-`docker pull qirpi/foundation-screed`
-`docker run --init --network=host qirpi/foundation-screed`
+
+```bash
+docker pull qirpi/foundation-screed
+docker run --init --network=host qirpi/foundation-screed
+```
+
 
 #### Building
 Make sure you have a recent nodejs version like v16. It is recommended to use a tool like `nvm` to install a specific version.
