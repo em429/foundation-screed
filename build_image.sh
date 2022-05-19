@@ -1,20 +1,16 @@
 #!/bin/bash
-# Build a docker image from current commit, tag it and upload to AWS ECR.
-docker login
+# Build an oci-container image from current commit, tag it and upload to DockerHub
+podman login
 
+image_name="foundation-screed"
 commit_hash=$(git rev-parse --short HEAD)
-echo "building image from $commit_hash ..."
 
-docker build -t "foundation-frontend:$commit_hash" .
+echo "building $image_name from $commit_hash ..."
 
-docker tag "foundation-frontend:$commit_hash" "foundation-frontend:latest"
+podman build -t "$image_name:$commit_hash" .
 
-docker tag "foundation-frontend:$commit_hash" \
-           "666132216995.dkr.ecr.us-east-1.amazonaws.com/foundation-frontend:$commit_hash" \
-           && docker push "666132216995.dkr.ecr.us-east-1.amazonaws.com/foundation-frontend:$commit_hash" \
-           && echo "$commit_hash successfully built and pushed to registry."
+# TODO: also tag latest
+# podman tag "foundation-screed:$commit_hash" "foundation-screed:latest"
 
-# docker tag "foundation-frontend:latest" \
-#            "666132216995.dkr.ecr.us-east-1.amazonaws.com/foundation-frontend:latest" \
-#            && docker push "666132216995.dkr.ecr.us-east-1.amazonaws.com/foundation-frontend:latest" \
-#            && echo "tagged as latest successfully and pushed to registry."
+podman push "$image_name:$commit_hash" \
+           && echo "$image_name:$commit_hash successfully built and pushed to registry."
