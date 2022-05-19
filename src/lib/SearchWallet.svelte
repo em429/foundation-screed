@@ -1,0 +1,93 @@
+<script lang="ts">
+    import Transition from '$lib/Transition.svelte'
+
+    import { page } from '$app/stores'
+    import { goto } from '$app/navigation'
+
+    //export let stats
+
+    async function handleSubmit(event) {
+        const formData = new FormData(event.target)
+        const data = {}
+        for (let field of formData) {
+            const [key, value] = field
+            data[key] = value
+        }
+        goto(`/${$page.params.pool}/${data['wallet']}`, { noscroll: true })
+    }
+
+
+</script>
+
+<!-- Start SearchWallet Card -->
+<div class="card col-span-1 min-h-fit overflow-x-auto p-0 shadow xl:col-span-2">
+    <Transition y={-100}>
+        <div class="bg-[#174C7E] p-2">
+            <h2 class="inline-block text-2xl font-bold text-white">Search</h2>
+        </div>
+
+        <div class="content mb-7 overflow-x-auto p-3 text-center">
+            <span class="inline-block mt-6">
+                <p>Enter your wallet address to get your rig specific stats</p>
+            </span>
+
+
+        <!-- TODO: display diff from /ports endpoint -->
+	<!--
+            <ul class="m-7 inline-block text-left">
+                <li class="text-md block font-semibold sm:text-xl">
+                    {$page.url.hostname}
+                </li>
+                <li class="support">Stratum Adress</li>
+            </ul>
+            <ul class="mb-7 block space-x-12 text-sm sm:text-base">
+                <li class="inline-block text-left">
+                    <span class="block font-medium">{stats?.config.algorithm}</span>
+                    <span class="support">Algo</span>
+                </li>
+
+                <li class="inline-block text-left">
+                    <span class="block font-medium ">5031</span>
+                    <span class="support">Port - 8 to 64 diff.</span>
+                </li>
+
+                <li class="inline-block text-left">
+                    <span class="block font-medium">5032</span>
+                    <span class="support">Port - 16 to 128 diff.</span>
+                </li>
+            </ul>
+            -->
+
+
+
+
+            <div class="text-center">
+                <div class="form-control">
+                    <!-- TODO: add some input validation: no spaces allowed, strip them -->
+                    <form
+                        on:submit|preventDefault={handleSubmit}
+                        method="get"
+                        action={`/${$page.params.pool}`}
+                    >
+                        <input
+                            required
+                            type="search"
+                            name="wallet"
+                            placeholder="RVN Wallet Address"
+                            class="@high field w-auto ~blue placeholder:text-blue-800/30"
+                        />
+                        <button
+                            class="@high button mt-2 bg-[#174C7E] text-white"
+                            type="submit">Submit</button
+                        >
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- <Line data={dataLine} {options} /> -->
+    </Transition>
+</div>
+
+<!-- END Card -->
+<style>
+</style>

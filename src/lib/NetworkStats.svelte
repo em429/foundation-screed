@@ -1,0 +1,90 @@
+<script lang="ts">
+    import { ENV } from '$lib/env.js'
+    export let stats
+</script>
+
+<div class="card col-span-1 min-h-fit overflow-x-auto p-0 shadow">
+    <div class="bg-[#174C7E] p-2">
+        <h2 class="text-2xl font-bold text-white">Network</h2>
+    </div>
+
+    <!-- Network Stats Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full table-auto text-left text-sm">
+            <tbody>
+                <tr class="hover:bg-blue-100">
+                    <th>Hashrate</th>
+                    <!-- convert Hash to Terrahash by dividing it by 1 billion-->
+                    <td class="font-bold italic">
+                        {(parseFloat(stats?.network.hashrate) / 1000 ** 4).toFixed(2) +
+                            ' TH/s'}
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-100">
+                    <th>Difficulty</th>
+                    <td>{(parseFloat(stats?.network.difficulty) / 1000).toFixed(2)} K</td>
+                </tr>
+                <tr class="hover:bg-blue-100">
+                    <th>Block Height</th>
+                    <td>
+                        <!-- Block icon -->
+                        <span class="icon mb-1 mr-[-5px] text-[#174C7E]">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                                />
+                            </svg>
+                        </span>
+                        <a
+                            target="_blank"
+                            href="https://rvn.tokenview.com/en/block/{stats?.network
+                                .height}"
+                            class="underline decoration-dotted hover:decoration-solid"
+                        >
+                            {[
+                                stats?.network.height.toString().slice(0, 1),
+                                ',',
+                                stats?.network.height.toString().slice(1, 4),
+                                ',',
+                                stats?.network.height.toString().slice(4),
+                            ].join('')}
+                        </a>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-100">
+                    <th>Block Time</th>
+                    <!-- TODO multicoin: set from config var -->
+                    <td>{ENV.BLOCK_TIME_IN_SECONDS}</td>
+                </tr>
+
+                <!--
+                            <tr class="hover:bg-blue-100">
+                                <th>Last Found</th>
+                                <td>TODO minutes ago</td>
+                            </tr>
+
+                            -->
+            </tbody>
+        </table>
+    </div>
+    <!-- END Network Stats Table -->
+    <!-- END card-body -->
+</div>
+
+<style>
+    th {
+        padding: 4px 0 2px 8px;
+    }
+    td {
+        padding: 4px 0 2px 8px;
+    }
+</style>

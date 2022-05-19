@@ -1,0 +1,49 @@
+{
+    "name": "screed",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "svelte-kit dev",
+        "build": "svelte-kit build",
+        "package": "svelte-kit package",
+        "preview": "svelte-kit preview",
+        "check": "svelte-check --tsconfig ./tsconfig.json",
+        "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+        "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
+        "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
+    },
+    "prettier": {
+        "trailingComma": "es5",
+        "tabWidth": 4,
+        "semi": false,
+        "singleQuote": true,
+        "printWidth": 90
+    },
+    "devDependencies": {
+        "@sveltejs/adapter-node": "^1.0.0-next.71",
+        "@sveltejs/kit": "next",
+        "@typescript-eslint/eslint-plugin": "^5.10.1",
+        "@typescript-eslint/parser": "^5.10.1",
+        "autoprefixer": "^10.4.2",
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-svelte3": "^3.2.1",
+        "postcss": "^8.4.6",
+        "prettier": "^2.6.2",
+        "prettier-plugin-tailwindcss": "^0.1.8",
+        "svelte": "^3.44.0",
+        "svelte-check": "^2.2.6",
+        "svelte-preprocess": "^4.10.1",
+        "tailwindcss": "^3.0.22",
+        "tslib": "^2.3.1",
+        "typescript": "~4.5.4"
+    },
+    "type": "module",
+    "dependencies": {
+        "a17t": "^0.10.1",
+        "bitcoind-rpc": "^0.9.1",
+        "date-fns": "^2.28.0",
+        "svelte-chartjs": "^1.1.4",
+        "svelte2tsx": "^0.5.6"
+    }
+}
