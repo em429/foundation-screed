@@ -1,6 +1,8 @@
 build/
 node_modules/
 
+static/favicon.ico
+
 src/lib/env.js
 
 # Nix
