@@ -11,6 +11,7 @@ export const ENV = {
     BLOCK_TIME_UNIT_DIVIDER: 60,// to make seconds minutes in template
 
     BLOCK_EXPLORER_URL: 'https://',
+    TX_EXPLORER_URL: 'https://',
 
     // Convert Hash to Petahash by dividing it by 1 trillion -->
     HASHRATE_DISPLAY_MULTIPLIER: 1000 ** 5,

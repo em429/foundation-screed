@@ -45,7 +45,7 @@
                         </span>
                         <a
                             target="_blank"
-                            href="https://rvn.tokenview.com/en/block/{stats?.network
+                            href="{ENV.BLOCK_EXPLORER_URL}/{stats?.network
                                 .height}"
                             class="underline decoration-dotted hover:decoration-solid"
                         >
