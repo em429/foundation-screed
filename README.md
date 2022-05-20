@@ -24,3 +24,6 @@ Make sure you have a recent nodejs version like v16. It is recommended to use a 
 
 -   sveltekit
 -   tailwindcss + a17
+
+
+I'm available for support with setup for a one time fee, please reach out via support@lambd.ax
