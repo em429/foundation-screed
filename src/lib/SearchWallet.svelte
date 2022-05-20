@@ -15,22 +15,20 @@
         }
         goto(`/${$page.params.pool}/${data['wallet']}`, { noscroll: true })
     }
-
-
 </script>
 
 <!-- Start SearchWallet Card -->
-<div class="card col-span-1 min-h-fit overflow-x-auto p-0 shadow xl:col-span-2">
+<div class="card min-h-fit overflow-x-auto p-0 shadow shadow-stone-200">
     <Transition y={-100}>
-        <div class="bg-[#174C7E] p-2">
-            <h2 class="inline-block text-2xl font-bold text-white">Search</h2>
+        <div class="bg-secondary-200  p-2">
+            <h2 class="inline-block text-2xl font-bold ">Miner Stats</h2>
         </div>
 
         <div class="content mb-7 overflow-x-auto p-3 text-center">
+
             <span class="inline-block mt-6">
                 <p>Enter your wallet address to get your rig specific stats</p>
             </span>
-
 
         <!-- TODO: display diff from /ports endpoint -->
 	<!--
@@ -58,9 +56,6 @@
             </ul>
             -->
 
-
-
-
             <div class="text-center">
                 <div class="form-control">
                     <!-- TODO: add some input validation: no spaces allowed, strip them -->
@@ -73,11 +68,11 @@
                             required
                             type="search"
                             name="wallet"
-                            placeholder="RVN Wallet Address"
-                            class="@high field w-auto ~blue placeholder:text-blue-800/30"
+                            placeholder="Wallet Address"
+                            class="field w-auto ~primary placeholder:text-primary-800/50"
                         />
                         <button
-                            class="@high button mt-2 bg-[#174C7E] text-white"
+                            class="button mt-2 ~primary"
                             type="submit">Submit</button
                         >
                     </form>

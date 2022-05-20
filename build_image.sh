@@ -2,7 +2,7 @@
 # Build an oci-container image from current commit, tag it and upload to DockerHub
 podman login
 
-image_name="foundation-screed"
+image_name="qirpi/foundation-screed"
 commit_hash=$(git rev-parse --short HEAD)
 
 echo "building $image_name from $commit_hash ..."

@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { ENV } from '$lib/env.js'
+
     export let blocks = { confirmed: [], pending: [], kicked: [] }
 
     // Augment block arrays coming from the API so they can be easily looped
@@ -9,17 +11,17 @@
 </script>
 
 <!-- Start Blocks Card -->
-<div class="card col-span-1 min-h-fit overflow-x-auto p-0 shadow xl:col-span-2">
-    <div class="space-x-2 bg-[#174C7E] p-2">
+<div class="mt-4 card min-h-fit overflow-x-auto p-0 shadow shadow-stone-200">
+    <div class="space-x-2 bg-secondary-200 p-2">
         <a href="/">
-            <h2 class="inline-block text-2xl  font-bold text-white">Blocks</h2>
+            <h2 class="inline-block text-2xl font-bold">Blocks</h2>
         </a>
     </div>
 
     <!-- Miner Stats Table -->
     <div class="overflow-x-auto">
         <table class="w-full table-auto text-xs sm:text-sm ">
-            <thead class="border-orange-200 text-left">
+            <thead class="border-secondary-200 text-left">
                 <tr>
                     <th>Date</th>
                     <th>Block</th>
@@ -32,7 +34,7 @@
 
             <tbody>
                 {#each [...blocks?.pending, ...blocks?.confirmed, ...blocks?.kicked] || [] as block}
-                    <tr class="hover:bg-blue-100">
+                    <tr class="hover:bg-primary-50">
                         <td>
                             {new Date(parseInt(block?.time)).toLocaleDateString('en-US')}
                             <span class="text-xs">
@@ -46,7 +48,7 @@
                         </td>
                         <td class="width-20">
                             <!-- Block icon -->
-                            <span class="icon mb-1 mr-[-5px] text-[#174C7E]">
+                            <span class="icon mb-1 mr-[-2px] text-primary-600">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="h-6 w-6"
@@ -65,7 +67,7 @@
                             <a
                                 target="_blank"
                                 class="underline decoration-dotted hover:decoration-solid"
-                                href="https://rvn.tokenview.com/en/block/{block?.height}"
+                                href="{ENV.BLOCK_EXPLORER_URL}/{block?.height}"
                             >
                                 {[
                                     block?.height.toString().slice(0, 1),

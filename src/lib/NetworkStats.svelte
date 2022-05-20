@@ -3,32 +3,31 @@
     export let stats
 </script>
 
-<div class="card col-span-1 min-h-fit overflow-x-auto p-0 shadow">
-    <div class="bg-[#174C7E] p-2">
-        <h2 class="text-2xl font-bold text-white">Network</h2>
+<div class="card min-h-fit overflow-x-auto p-0 shadow shadow-stone-200">
+    <div class="bg-secondary-200 p-2">
+        <h2 class="text-2xl font-bold">Network</h2>
     </div>
 
     <!-- Network Stats Table -->
     <div class="overflow-x-auto">
         <table class="w-full table-auto text-left text-sm">
             <tbody>
-                <tr class="hover:bg-blue-100">
+                <tr class="hover:bg-primary-50">
                     <th>Hashrate</th>
-                    <!-- convert Hash to Terrahash by dividing it by 1 billion-->
                     <td class="font-bold italic">
-                        {(parseFloat(stats?.network.hashrate) / 1000 ** 4).toFixed(2) +
-                            ' TH/s'}
+                        {(parseFloat(stats?.network.hashrate) / ENV.HASHRATE_DISPLAY_MULTIPLIER).toFixed(2) +
+                            ' ' + ENV.HASHRATE_DISPLAY_UNIT}
                     </td>
                 </tr>
-                <tr class="hover:bg-blue-100">
+                <tr class="hover:bg-primary-50">
                     <th>Difficulty</th>
                     <td>{(parseFloat(stats?.network.difficulty) / 1000).toFixed(2)} K</td>
                 </tr>
-                <tr class="hover:bg-blue-100">
+                <tr class="hover:bg-primary-50">
                     <th>Block Height</th>
                     <td>
                         <!-- Block icon -->
-                        <span class="icon mb-1 mr-[-5px] text-[#174C7E]">
+                        <span class="icon mb-1 mr-[-2px] text-primary-600">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-6 w-6"
@@ -60,14 +59,13 @@
                         </a>
                     </td>
                 </tr>
-                <tr class="hover:bg-blue-100">
+                <tr class="hover:bg-primary-50">
                     <th>Block Time</th>
-                    <!-- TODO multicoin: set from config var -->
-                    <td>{ENV.BLOCK_TIME_IN_SECONDS}</td>
+                    <td>{ENV.BLOCK_TIME_IN_SECONDS / ENV.BLOCK_TIME_UNIT_DIVIDER} {ENV.BLOCK_TIME_UNIT}</td>
                 </tr>
 
                 <!--
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Last Found</th>
                                 <td>TODO minutes ago</td>
                             </tr>

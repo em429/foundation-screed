@@ -5,7 +5,6 @@ export const ENV = {
     STRATUM_URL: 'lottononce.com',
     FOUNDATION_API_BASE: 'https://api.example.com/api/v1',
 
-
     BLOCK_REWARD: 6.25,  // BTC current block reward
     BLOCK_TIME_IN_SECONDS: 600, // 10 minutes for BTC
     BLOCK_TIME_UNIT: 'minutes',

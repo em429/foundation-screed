@@ -8,10 +8,3 @@
         }
     }
 </script>
-
-<main class="block p-4 ">
-    <div class="container mx-auto grid max-w-6xl grid-cols-1 gap-4 xl:grid-cols-3" />
-</main>
-
-<style>
-</style>

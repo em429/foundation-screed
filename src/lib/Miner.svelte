@@ -36,13 +36,13 @@
 </script>
 
 <!-- Start Miner Card -->
-<div class="overlow-x-auto col-span-1 xl:col-span-2">
+<div class="overlow-x-auto ">
     <Transition x={100} {animate}>
-        <div class="card relative min-h-fit p-0 shadow shadow-orange-800/20">
-            <div class="bg-[#174C7E] p-2">
+        <div class="card relative min-h-fit p-0 shadow shadow-stone-200">
+            <div class="bg-secondary-200 p-2">
                 <a sveltekit:prefetch sveltekit:noscroll href="/">
-                    <button class="button bg-blue-600 align-text-bottom">
-                        <span class="icon text-white">
+                    <button class="button bg-secondary-300 align-text-bottom">
+                        <span class="icon text-secondary-800">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-6 w-6"
@@ -60,9 +60,9 @@
                         </span>
                     </button>
                 </a>
-                <h2 class="inline-block text-2xl font-bold text-white">Miner</h2>
+                <h2 class="inline-block text-2xl font-bold">Miner</h2>
                 <h2
-                    class="absolute right-2 top-4 hidden text-sm font-bold text-zinc-200 sm:top-3 sm:inline-block sm:text-lg"
+                    class="absolute right-2 top-4 hidden text-sm font-bold text-stone-500 sm:top-3 sm:inline-block sm:text-lg"
                 >
                     {$page.params.wallet}
                 </h2>
@@ -73,7 +73,7 @@
                 <div class="col-span-1">
                     <table class="w-full table-auto text-left">
                         <tbody class="text-sm">
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Hashrate</th>
                                 <!-- convert Hash to Megahash by dividing it by 1 million -->
                                 <td
@@ -84,7 +84,7 @@
                                     <span class="text-xs">MH/s</span>
                                 </td>
                             </tr>
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Efficiency</th>
                                 <td>
                                     {#if miner?.shares.shared.invalid + miner?.shares.shared.stale === 0}
@@ -97,7 +97,7 @@
                                     {/if}
                                 </td>
                             </tr>
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Workers</th>
                                 <!-- Filter out inactive workers -->
                                 <td>
@@ -105,7 +105,7 @@
                                         .length}
                                 </td>
                             </tr>
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Total Shares</th>
                                 <td>
                                     {#if typeof miner?.shares.shared.valid === 'undefined'}
@@ -118,7 +118,7 @@
                             <!-- The Miner Round Share is the miners current share percent of the
                              block reward for the current round. -->
 
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Round Share</th>
                                 <td>
                                     {#if typeof miner?.shares.shared.valid === 'undefined'}
@@ -155,7 +155,7 @@ a                    The essence of the formula used is the same for all Pay Sys
           	        -->
                             <!-- TODO: calculate this somewhere else instead of the template;
           	           it's a bit too much complexity here -->
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Est. Earnings</th>
 
                                 <td>
@@ -188,23 +188,23 @@ a                    The essence of the formula used is the same for all Pay Sys
                     </span>
                     <table class="w-full table-auto text-left">
                         <tbody class="text-sm">
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Unconfirmed</th>
                                 <td>{miner?.payments.immature}</td>
                             </tr>
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Unpaid</th>
                                 <td>{miner?.payments.balances}</td>
                             </tr>
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Immature</th>
                                 <td>{miner?.payments.immature}</td>
                             </tr>
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Validated</th>
                                 <td>{miner?.payments.generate}</td>
                             </tr>
-                            <tr class="hover:bg-blue-100">
+                            <tr class="hover:bg-primary-50">
                                 <th>Total Paid</th>
                                 <td>{miner?.payments.paid}</td>
                             </tr>

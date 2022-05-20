@@ -1,27 +1,22 @@
 <script lang="ts">
     import { page } from '$app/stores'
+    import { ENV } from '$lib/env.js'
 
     import Transition from '$lib/Transition.svelte'
 
     export let transactions = []
 
-    // Filter workers object to only contain our wallet
-    //    const filtered_blocks = blocks.shared.filter(
-    //  	(worker) => worker?.worker.split('.')[0] === $page.params.wallet
-    //)
-
     let pathname = $page.url.pathname.split('/')[3]
 </script>
 
-<!--    class:text-base={$page.params} -->
 <!-- Start Transactions Card -->
-<div class="col-span-1 overflow-x-hidden xl:col-span-2">
+<div class="mt-4 overflow-x-hidden">
     <Transition x={100}>
-        <div class="card col-span-1 min-h-fit overflow-x-auto p-0 shadow xl:col-span-2">
-            <div class="space-x-3 bg-[#174C7E] p-2 text-white sm:space-x-6">
+        <div class="card min-h-fit overflow-x-auto p-0 shadow shadow-stone-200">
+            <div class="space-x-3 bg-secondary-200 p-2  sm:space-x-6">
                 <a sveltekit:noscroll href="/{$page.params.pool}/{$page.params.wallet}">
                     <h2
-                        class:text-zinc-300={pathname === 'tx'}
+                        class:text-secondary-400={pathname === 'tx'}
                         class="inline-block text-xl font-bold sm:text-2xl"
                     >
                         My Workers
@@ -29,7 +24,7 @@
                 </a>
 
                 <a href="/{$page.params.pool}/{$page.params.wallet}/tx">
-                    <h2 class="inline-block text-xl font-bold text-white sm:text-2xl">
+                    <h2 class="inline-block text-xl font-bold  sm:text-2xl">
                         My Transactions
                     </h2>
                 </a>
@@ -39,7 +34,7 @@
             <div class="overflow-x-auto">
                 {#if transactions.length !== 0}
                     <table class="w-full table-auto text-xs sm:text-sm">
-                        <thead class="border-orange-200 text-left">
+                        <thead class="border-secondary-200 text-left">
                             <tr>
                                 <th>Date</th>
                                 <th>Amount</th>
@@ -50,7 +45,7 @@
 
                         <tbody>
                             {#each transactions || [] as tx}
-                                <tr class="hover:bg-blue-100">
+                                <tr class="hover:bg-primary-50">
                                     <td>
                                         {new Date(
                                             parseInt(tx?.time) * 1000
@@ -75,7 +70,7 @@
                                         <a
                                             target="_blank"
                                             class="underline decoration-dotted hover:decoration-solid"
-                                            href="https://rvn.tokenview.com/en/tx/{tx?.txid}"
+                                            href="{ENV.TX_EXPLORER_URL}/{tx?.txid}"
                                         >
                                             {tx?.txid}
                                         </a>
@@ -89,10 +84,12 @@
                     {/if}
 
                 {#if transactions.length === 0}
+                <div class="p-2">
                     <p>
                         The transaction validation API is currently unavailable, please
                         check back in a few minutes.
                     </p>
+                </div>
                 {/if}
             </div>
             <!-- END miner Stats Table -->

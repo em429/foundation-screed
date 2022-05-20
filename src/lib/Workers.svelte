@@ -1,5 +1,6 @@
 <script lang="ts">
     import { page } from '$app/stores'
+    import { ENV } from '$lib/env.js'
 
     import Transition from '$lib/Transition.svelte'
 
@@ -8,12 +9,11 @@
 </script>
 
 <!-- Start Workers Card -->
-<div class="col-span-1 xl:col-span-2">
     <Transition x={100}>
-        <div class="card col-span-1 min-h-fit overflow-x-auto p-0 shadow xl:col-span-2">
-            <div class="space-x-3 bg-[#174C7E] p-2 sm:space-x-6">
+        <div class="mt-4 card min-h-fit overflow-x-auto p-0 shadow shadow-stone-200">
+            <div class="space-x-3 bg-secondary-200 p-2 sm:space-x-6">
                 <a sveltekit:noscroll href="/{$page.params.pool}/{$page.params.wallet}">
-                    <h2 class="inline-block text-xl font-bold text-white sm:text-2xl">
+                    <h2 class="inline-block text-xl font-bold sm:text-2xl">
                         My Workers
                     </h2>
                 </a>
@@ -23,7 +23,7 @@
                     sveltekit:noscroll
                     href="/{$page.params.pool}/{$page.params.wallet}/tx"
                 >
-                    <h2 class="inline-block text-xl font-bold text-zinc-300 sm:text-2xl">
+                    <h2 class="inline-block text-xl font-bold text-secondary-400 sm:text-2xl">
                         My Transactions
                     </h2>
                 </a>
@@ -34,11 +34,11 @@
             {:else}
                 <div class="overflow-x-auto">
                     <table
-                        class="table-auto text-left border-orange-200 w-full text-xs sm:text-sm"
+                        class="table-auto text-left border-secondary-200  w-full text-xs sm:text-sm"
                     >
                         <!-- Workers Table -->
 
-                        <thead class="border-orange-200">
+                        <thead class="border-secondary-200 ">
                             <tr>
                                 <th>Worker Name</th>
                                 <th>Hashrate</th>
@@ -51,14 +51,14 @@
                         <tbody>
                             {#each my_workers || [] as worker}
                                 {#if worker?.hashrate !== 0}
-                                    <tr class="hover:bg-blue-100">
+                                    <tr class="hover:bg-primary-50">
                                         <td>{worker?.worker.split('.')[1]}</td>
                                         <td>
                                             {(
                                                 parseFloat(worker?.hashrate) /
-                                                1000 ** 2
+                                                ENV.WORKER_HASHRATE_DISPLAY_MULTIPLIER
                                             ).toFixed(2)}
-                                            <span class="text-xs">MH/s</span>
+                                            <span class="text-xs">{ENV.WORKER_HASHRATE_DISPLAY_UNIT}/s</span>
                                         </td>
                                         <td>{worker?.shares.valid}</td>
                                         <td
@@ -82,7 +82,6 @@
             {/if}
         </div>
     </Transition>
-</div>
 
 <!-- END Card -->
 <style>

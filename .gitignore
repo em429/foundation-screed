@@ -2,7 +2,6 @@ build/
 node_modules/
 
 src/lib/env.js
-env.js
 
 # Nix
 result

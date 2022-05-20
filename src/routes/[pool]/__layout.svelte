@@ -1,23 +1,29 @@
 <script context="module">
     import { ENV } from '$lib/env.js'
 
+    import { handleError } from '$lib/utils.js'
+
+    import ErrorBox from '$lib/ErrorBox.svelte'
+
     let stats
     let blocks
     let historical
-    let api_error
+
+    let error = { type: 'none', message: '' }
+
 
     export async function load({ url, fetch, params, status }) {
         let stats_json = await fetch(ENV.FOUNDATION_API_BASE + `/${params.pool}`)
             .then((r) => r.json())
-            .catch((error) => {
-                api_error = true
+            .catch((e) => {
+            	error = handleError(e)
             })
         stats = stats_json?.body.primary
 
         let blocks_json = await fetch(ENV.FOUNDATION_API_BASE + `/${params.pool}/blocks`)
             .then((r) => r.json())
-            .catch((error) => {
-                api_error = true
+            .catch((e) => {
+            	error = handleError(e)
             })
         blocks = blocks_json?.body.primary
 
@@ -25,8 +31,8 @@
             `${ENV.FOUNDATION_API_BASE}/${params.pool}/historical`
         )
             .then((r) => r.json())
-            .catch((error) => {
-                api_error = true
+            .catch((e) => {
+            	error = handleError(e)
             })
         historical = historical_json?.body.primary
 
@@ -61,43 +67,37 @@
 
 <svelte:head>
     <title
-        >{ENV.POOL_NAME || 'foundation-server and foundation-screed based '} | {stats?.config.coin || ''} {stats
-            ?.config.symbol || ''} Mining Pool</title
+        >{ENV.POOL_NAME || 'foundation-server and foundation-screed based '} | {stats
+            ?.config.coin || ''}
+        {stats?.config.symbol || ''} Mining Pool</title
     >
-    <script
-        data-goatcounter="https://38pt.goatcounter.com/count"
-        async
-        src="//gc.zgo.at/count.js"></script>
 </svelte:head>
 
-<main class="block min-h-screen p-4">
-    <!-- Start Grid Container -->
-    <div class=" container mx-auto grid max-w-xl grid-cols-1 items-start gap-4">
-        {#if api_error}
-            <div class="content">
-                <h1>Statistics API is temporarily unavailable</h1>
-                <h2>Stratums address:</h2>
+<!-- Start Grid Container -->
+<div
+    class="text-stone-800 container mx-auto grid max-w-6xl grid-cols-1 lg:grid-cols-3 items-start gap-4 p-4"
+>
 
-                <p>
-                    lowdiff: <code>{ENV.STRATUM_URL}:3333</code><br />
-                    highdiff: <code>{ENV.STRATUM_URL}:4334</code>
-                </p>
-            </div>
-        {:else if typeof stats === 'undefined' && !api_error}
-            <!-- Handle if requested pool doesnt exist
+    {#if error.type === 'none'}
+        <div class="col-span-1">
+            <NetworkStats {stats} />
+            <Pool {stats} {blocks} {historical} />
+        </div>
+
+        <div class="col-span-2">
+            <slot />
+            <Blocks {blocks} />
+        </div>
+    {:else if error.type === 'api'}
+        <ErrorBox error_msg="Statistics API temporarily unavailable" />
+    {:else if typeof stats === 'undefined' && error.type === 'none'}
+        <!-- Handle if requested pool doesnt exist
     	       redirect to special error page -->
-            <MissingPool />
-        {:else}
-            <div class="col-span-1 grid gap-4">
-                <NetworkStats {stats} />
-                <Pool {stats} {blocks} {historical} />
-            </div>
-
-            <div class="grid gap-4">
-                <slot />
-                <Blocks {blocks} />
-            </div>
-        {/if}
-    </div>
-    <!-- END GRID container -->
-</main>
+        <MissingPool />
+    {:else if error.type === 'limiter'}
+        <ErrorBox error_msg="Too many requests!" />
+    {:else}
+        <ErrorBox error_msg="An unknown error occured with the statistics API" />
+    {/if}
+</div>
+<!-- END GRID container -->
