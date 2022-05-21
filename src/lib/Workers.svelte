@@ -2,16 +2,14 @@
     import { page } from '$app/stores'
     import { ENV } from '$lib/env.js'
 
-    import Transition from '$lib/Transition.svelte'
-
     export let miner
     export let my_workers = []
 </script>
 
 <!-- Start Workers Card -->
-    <Transition x={100}>
-        <div class="mt-4 card min-h-fit overflow-x-auto p-0 shadow shadow-stone-200">
-            <div class="space-x-3 bg-secondary-200 p-2 sm:space-x-6">
+<div class="mt-4 overflow-x-hidden t-card-shadow">
+        <div class="card t-card-body min-h-fit overflow-x-auto p-0">
+            <div class="space-x-3 t-card-header sm:space-x-6">
                 <a sveltekit:noscroll href="/{$page.params.pool}/{$page.params.wallet}">
                     <h2 class="inline-block text-xl font-bold sm:text-2xl">
                         My Workers
@@ -23,7 +21,7 @@
                     sveltekit:noscroll
                     href="/{$page.params.pool}/{$page.params.wallet}/tx"
                 >
-                    <h2 class="inline-block text-xl font-bold text-secondary-400 sm:text-2xl">
+                    <h2 class="inline-block text-xl font-bold t-card-header-inactive-text sm:text-2xl">
                         My Transactions
                     </h2>
                 </a>
@@ -34,11 +32,11 @@
             {:else}
                 <div class="overflow-x-auto">
                     <table
-                        class="table-auto text-left border-secondary-200  w-full text-xs sm:text-sm"
+                        class="table-auto text-left w-full text-xs sm:text-sm"
                     >
                         <!-- Workers Table -->
 
-                        <thead class="border-secondary-200 ">
+                        <thead>
                             <tr>
                                 <th>Worker Name</th>
                                 <th>Hashrate</th>
@@ -51,7 +49,7 @@
                         <tbody>
                             {#each my_workers || [] as worker}
                                 {#if worker?.hashrate !== 0}
-                                    <tr class="hover:bg-primary-50">
+                                    <tr>
                                         <td>{worker?.worker.split('.')[1]}</td>
                                         <td>
                                             {(
@@ -81,7 +79,7 @@
                 </div>
             {/if}
         </div>
-    </Transition>
+</div>
 
 <!-- END Card -->
 <style>

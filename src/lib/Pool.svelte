@@ -49,16 +49,16 @@
 </script>
 
 <!-- Start Pool Card -->
-<div class="card mt-4 min-h-fit overflow-x-auto p-0 shadow shadow-stone-200">
-    <div class="bg-secondary-200 p-2">
-        <h2 class="text-2xl font-bold">Pool</h2>
+<div class="card t-card-body t-card-shadow mt-4">
+    <div class="t-card-header">
+        <h2 class="font-bold text-2xl">Pool</h2>
     </div>
 
     <!-- Pool Stats Table -->
     <div class="overflow-x-auto">
         <table class="w-full table-auto text-left">
             <tbody class="text-sm">
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Hashrate</th>
                     <!-- convert hash to megahash by dividing by 1 mil -->
                     <td class="font-bold italic">
@@ -78,7 +78,7 @@
 
                   / (now_unix_timestap + est_blocktime_in_seconds)
                 -->
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Progress</th>
                     <td>
                         {(
@@ -89,26 +89,26 @@
                 </tr>
 
                 <!--
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Effort</th>
                     <td>{parseFloat(stats?.status.effort).toFixed(2)}</td>
                 </tr>
                 -->
 
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <!-- luck1, luck10, luck100 show the pool luck over the last x blocks-->
                     <th>Luck (last 10 blocks)</th>
                     <td>{parseFloat(stats?.status.luck.luck10)}</td>
                 </tr>
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Workers</th>
                     <td>{stats?.status.workers}</td>
                 </tr>
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Fee</th>
                     <td>{stats?.config.recipientFee * 100}%</td>
                 </tr>
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Next Payment</th>
                     <td
                         >{new Date(parseInt(stats?.payments.next)).toLocaleTimeString(
@@ -116,30 +116,30 @@
                         )}
                     </td>
                 </tr>
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Total Blocks Found</th>
                     <!-- blocks are retained indefinitely, shares reset at start of
                              every new round after a block is found. -->
                     <td>{stats?.blocks.valid}</td>
                 </tr>
                 <!--
-                    <tr class="hover:bg-primary-50">
+                    <tr>
                         <th>Last Found</th>
                         <td>TODO minutes ago</td>
                     </tr>
                     -->
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Shares This Round</th>
                     <td>{stats?.shares.valid}</td>
                 </tr>
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Pay System</th>
                     <td>PPLNT</td>
                 </tr>
                 <!-- To calculate Estimated Avg. Time to next block in seconds:
         	           network_hashrate / pool_hashrate * block_time_in_seconds
         	    -->
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Est.Avg. Time</th>
                     <td>
                         {#if est_avg_blocktime === 0}

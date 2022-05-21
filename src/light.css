@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+    Theme styles applied globally
+*/
+
+/* root background color */
+:root {
+    @apply bg-stone-50;
+}
+
+/* table row hover style */
+tbody tr {
+    @apply hover:bg-lime-50 transition duration-300;
+
+}
+
+thead {
+    @apply border-stone-200
+}
+
+input {
+    @apply accent-lime-500;
+}
+
+/*
+    Rest of the theme is applied using namespaced css classes (e.g. t-card-body-fg)
+*/
+
+
+.t-card-header {
+  @apply bg-stone-200 text-stone-800;
+}
+
+.t-card-header-inactive-text {
+    @apply text-stone-400 hover:text-lime-500 transition-all;
+
+}
+
+.t-card-header-btn {
+    @apply bg-stone-300 text-stone-800;
+}
+
+.t-card-body {
+    @apply bg-white text-stone-800 shadow shadow-stone-200;
+}
+
+
+.t-primary-btn {
+    /* ~lime is a a17t special variable */
+    @apply ~lime;
+}
+
+.t-primary-input {
+    @apply ~lime placeholder:text-primary-600/40;
+}
+
+.t-block-icon-color {
+    @apply text-lime-600;
+}
+
+.t-footer-text {
+    @apply text-stone-400 text-xs;
+
+}

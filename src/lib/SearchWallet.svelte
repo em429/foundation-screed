@@ -1,6 +1,4 @@
 <script lang="ts">
-    import Transition from '$lib/Transition.svelte'
-
     import { page } from '$app/stores'
     import { goto } from '$app/navigation'
 
@@ -18,9 +16,9 @@
 </script>
 
 <!-- Start SearchWallet Card -->
-<div class="card min-h-fit overflow-x-auto p-0 shadow shadow-stone-200">
-    <Transition y={-100}>
-        <div class="bg-secondary-200  p-2">
+<div class="overflow-x-hidden t-card-shadow">
+<div class="card t-card-body">
+        <div class="t-card-header p-2">
             <h2 class="inline-block text-2xl font-bold ">Miner Stats</h2>
         </div>
 
@@ -69,10 +67,10 @@
                             type="search"
                             name="wallet"
                             placeholder="Wallet Address"
-                            class="field w-auto ~primary placeholder:text-primary-800/50"
+                            class="field w-auto t-primary-input "
                         />
                         <button
-                            class="button mt-2 ~primary"
+                            class="button mt-2 t-primary-btn"
                             type="submit">Submit</button
                         >
                     </form>
@@ -80,7 +78,7 @@
             </div>
         </div>
         <!-- <Line data={dataLine} {options} /> -->
-    </Transition>
+</div>
 </div>
 
 <!-- END Card -->

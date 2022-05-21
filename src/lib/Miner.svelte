@@ -1,48 +1,56 @@
+<!-- END Card -->
+<style>
+th {
+    padding: 2px 0 2px 6px;
+}
+td {
+    padding: 2px 0 2px 6px;
+}
+</style>
+
 <script lang="ts">
-    import Transition from '$lib/Transition.svelte'
-    import { ENV } from '$lib/env.js'
+import { ENV } from '$lib/env.js'
 
-    import { page, navigating } from '$app/stores'
+import { page, navigating } from '$app/stores'
 
-    export let miner
-    export let my_workers
-    export let stats
-    export let max_miner_time
+export let miner
+export let my_workers
+export let stats
+export let max_miner_time
 
-    export let animate = true
-    export let block_reward = ENV.BLOCK_REWARD
+export let animate = true
+export let block_reward = ENV.BLOCK_REWARD
 
-    // Extra polish for transitions: only animate the element that is really changing
-    //   Animate the Miner card only when navigating to, or from the pool index. Do not
-    //   animate when clicking between 'My Workers' and 'My Transactions' tabs.
-    //
-    // NOTE: IF animate is initialized as 'false' here, there would be a small glitch the
-    //       first time 'My Transactions' is clicked after coming from the pool index page.
-    //
-    //       Not sure why is this, but initializing animate as true and changing the logic to
-    //       the reverse fixed the glitch.
-    if (
-        $navigating?.to.pathname.endsWith(`/${$page.params.wallet}/tx`) &&
-        $navigating?.from.pathname.endsWith(`${$page.params.wallet}`)
-    ) {
-        animate = false
-    }
-    if (
-        $navigating?.to.pathname.endsWith(`/${$page.params.wallet}`) &&
-        $navigating?.from.pathname.endsWith(`${$page.params.wallet}/tx`)
-    ) {
-        animate = false
-    }
+// Extra polish for transitions: only animate the element that is really changing
+//   Animate the Miner card only when navigating to, or from the pool index. Do not
+//   animate when clicking between 'My Workers' and 'My Transactions' tabs.
+//
+// NOTE: IF animate is initialized as 'false' here, there would be a small glitch the
+//       first time 'My Transactions' is clicked after coming from the pool index page.
+//
+//       Not sure why is this, but initializing animate as true and changing the logic to
+//       the reverse fixed the glitch.
+if (
+    $navigating?.to.pathname.endsWith(`/${$page.params.wallet}/tx`) &&
+    $navigating?.from.pathname.endsWith(`${$page.params.wallet}`)
+) {
+    animate = false
+}
+if (
+    $navigating?.to.pathname.endsWith(`/${$page.params.wallet}`) &&
+    $navigating?.from.pathname.endsWith(`${$page.params.wallet}/tx`)
+) {
+    animate = false
+}
 </script>
 
 <!-- Start Miner Card -->
-<div class="overlow-x-auto ">
-    <Transition x={100} {animate}>
-        <div class="card relative min-h-fit p-0 shadow shadow-stone-200">
-            <div class="bg-secondary-200 p-2">
+<div class="overlow-x-auto">
+        <div class="t-card-body t-card-shadow card relative">
+            <div class="t-card-header">
                 <a sveltekit:prefetch sveltekit:noscroll href="/">
-                    <button class="button bg-secondary-300 align-text-bottom">
-                        <span class="icon text-secondary-800">
+                    <button class="t-card-header-btn button align-text-bottom">
+                        <span class="icon">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-6 w-6"
@@ -60,12 +68,12 @@
                         </span>
                     </button>
                 </a>
-                <h2 class="inline-block text-2xl font-bold">Miner</h2>
-                <h2
-                    class="absolute right-2 top-4 hidden text-sm font-bold text-stone-500 sm:top-3 sm:inline-block sm:text-lg"
+                <h2 class="font-bold text-2xl inline-block">Miner</h2>
+                <h3
+                    class="t-card-header-inactive-text absolute right-2 top-4 hidden text-sm font-bold sm:top-3 sm:inline-block sm:text-lg"
                 >
                     {$page.params.wallet}
-                </h2>
+                </h3>
             </div>
 
             <!-- Miner Stats Table -->
@@ -73,7 +81,7 @@
                 <div class="col-span-1">
                     <table class="w-full table-auto text-left">
                         <tbody class="text-sm">
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Hashrate</th>
                                 <!-- convert Hash to Megahash by dividing it by 1 million -->
                                 <td
@@ -84,7 +92,7 @@
                                     <span class="text-xs">MH/s</span>
                                 </td>
                             </tr>
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Efficiency</th>
                                 <td>
                                     {#if miner?.shares.shared.invalid + miner?.shares.shared.stale === 0}
@@ -97,7 +105,7 @@
                                     {/if}
                                 </td>
                             </tr>
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Workers</th>
                                 <!-- Filter out inactive workers -->
                                 <td>
@@ -105,7 +113,7 @@
                                         .length}
                                 </td>
                             </tr>
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Total Shares</th>
                                 <td>
                                     {#if typeof miner?.shares.shared.valid === 'undefined'}
@@ -118,7 +126,7 @@
                             <!-- The Miner Round Share is the miners current share percent of the
                              block reward for the current round. -->
 
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Round Share</th>
                                 <td>
                                     {#if typeof miner?.shares.shared.valid === 'undefined'}
@@ -155,7 +163,7 @@ a                    The essence of the formula used is the same for all Pay Sys
           	        -->
                             <!-- TODO: calculate this somewhere else instead of the template;
           	           it's a bit too much complexity here -->
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Est. Earnings</th>
 
                                 <td>
@@ -188,23 +196,23 @@ a                    The essence of the formula used is the same for all Pay Sys
                     </span>
                     <table class="w-full table-auto text-left">
                         <tbody class="text-sm">
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Unconfirmed</th>
                                 <td>{miner?.payments.immature}</td>
                             </tr>
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Unpaid</th>
                                 <td>{miner?.payments.balances}</td>
                             </tr>
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Immature</th>
                                 <td>{miner?.payments.immature}</td>
                             </tr>
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Validated</th>
                                 <td>{miner?.payments.generate}</td>
                             </tr>
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Total Paid</th>
                                 <td>{miner?.payments.paid}</td>
                             </tr>
@@ -214,15 +222,4 @@ a                    The essence of the formula used is the same for all Pay Sys
             </div>
             <!-- END miner Stats Table -->
         </div>
-    </Transition>
 </div>
-
-<!-- END Card -->
-<style>
-    th {
-        padding: 2px 0 2px 6px;
-    }
-    td {
-        padding: 2px 0 2px 6px;
-    }
-</style>

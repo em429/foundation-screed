@@ -75,16 +75,16 @@
 
 <!-- Start Grid Container -->
 <div
-    class="text-stone-800 container mx-auto grid max-w-6xl grid-cols-1 lg:grid-cols-3 items-start gap-4 p-4"
+    class="container mx-auto grid max-w-6xl grid-cols-1 lg:grid-cols-3 items-start gap-4 p-4"
 >
 
     {#if error.type === 'none'}
-        <div class="col-span-1">
+        <div class="lg:col-span-1">
             <NetworkStats {stats} />
             <Pool {stats} {blocks} {historical} />
         </div>
 
-        <div class="col-span-2">
+        <div class="lg:col-span-2 min-h-screen">
             <slot />
             <Blocks {blocks} />
         </div>

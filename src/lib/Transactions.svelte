@@ -10,13 +10,12 @@
 </script>
 
 <!-- Start Transactions Card -->
-<div class="mt-4 overflow-x-hidden">
-    <Transition x={100}>
-        <div class="card min-h-fit overflow-x-auto p-0 shadow shadow-stone-200">
-            <div class="space-x-3 bg-secondary-200 p-2  sm:space-x-6">
+<div class="mt-4 overflow-x-hidden t-card-shadow">
+        <div class="t-card-body card">
+            <div class="space-x-3 t-card-header sm:space-x-6">
                 <a sveltekit:noscroll href="/{$page.params.pool}/{$page.params.wallet}">
                     <h2
-                        class:text-secondary-400={pathname === 'tx'}
+                        class:t-card-header-inactive-text={pathname === 'tx'}
                         class="inline-block text-xl font-bold sm:text-2xl"
                     >
                         My Workers
@@ -34,7 +33,7 @@
             <div class="overflow-x-auto">
                 {#if transactions.length !== 0}
                     <table class="w-full table-auto text-xs sm:text-sm">
-                        <thead class="border-secondary-200 text-left">
+                        <thead class="text-left">
                             <tr>
                                 <th>Date</th>
                                 <th>Amount</th>
@@ -45,7 +44,7 @@
 
                         <tbody>
                             {#each transactions || [] as tx}
-                                <tr class="hover:bg-primary-50">
+                                <tr>
                                     <td>
                                         {new Date(
                                             parseInt(tx?.time) * 1000
@@ -94,7 +93,6 @@
             </div>
             <!-- END miner Stats Table -->
         </div>
-    </Transition>
 </div>
 
 <!-- END Card -->

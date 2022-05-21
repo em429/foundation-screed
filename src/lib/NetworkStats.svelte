@@ -3,31 +3,31 @@
     export let stats
 </script>
 
-<div class="card min-h-fit overflow-x-auto p-0 shadow shadow-stone-200">
-    <div class="bg-secondary-200 p-2">
-        <h2 class="text-2xl font-bold">Network</h2>
+<div class="t-card-body t-card-shadow card">
+    <div class="t-card-header">
+        <h2 class="font-bold text-2xl">Network</h2>
     </div>
 
     <!-- Network Stats Table -->
     <div class="overflow-x-auto">
         <table class="w-full table-auto text-left text-sm">
             <tbody>
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Hashrate</th>
                     <td class="font-bold italic">
                         {(parseFloat(stats?.network.hashrate) / ENV.HASHRATE_DISPLAY_MULTIPLIER).toFixed(2) +
                             ' ' + ENV.HASHRATE_DISPLAY_UNIT}
                     </td>
                 </tr>
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Difficulty</th>
                     <td>{(parseFloat(stats?.network.difficulty) / 1000).toFixed(2)} K</td>
                 </tr>
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Block Height</th>
                     <td>
                         <!-- Block icon -->
-                        <span class="icon mb-1 mr-[-2px] text-primary-600">
+                        <span class="icon t-block-icon-color mb-1 mr-[-2px]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-6 w-6"
@@ -59,13 +59,13 @@
                         </a>
                     </td>
                 </tr>
-                <tr class="hover:bg-primary-50">
+                <tr>
                     <th>Block Time</th>
                     <td>{ENV.BLOCK_TIME_IN_SECONDS / ENV.BLOCK_TIME_UNIT_DIVIDER} {ENV.BLOCK_TIME_UNIT}</td>
                 </tr>
 
                 <!--
-                            <tr class="hover:bg-primary-50">
+                            <tr>
                                 <th>Last Found</th>
                                 <td>TODO minutes ago</td>
                             </tr>
