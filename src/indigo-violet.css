@@ -46,15 +46,11 @@ input {
 
 
 .t-card-body {
+    @apply shadow shadow-indigo-200;
     @apply p-0 overflow-x-auto min-h-fit;
     @apply border-none rounded-lg;
     @apply bg-white text-indigo-800;
 }
-
-.t-card-shadow {
-    @apply shadow shadow-indigo-200;
-}
-
 
 .t-primary-btn {
     /* ~violet is a a17t special variable */

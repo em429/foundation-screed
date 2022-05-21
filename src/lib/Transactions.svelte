@@ -8,8 +8,7 @@
 </script>
 
 <!-- Start Transactions Card -->
-<div class="mt-4 overflow-x-hidden t-card-shadow">
-        <div class="t-card-body card">
+        <div class="mt-4 t-card-body card">
             <div class="space-x-3 t-card-header sm:space-x-6">
                 <a sveltekit:noscroll href="/{$page.params.pool}/{$page.params.wallet}">
                     <h2
@@ -91,7 +90,6 @@
             </div>
             <!-- END miner Stats Table -->
         </div>
-</div>
 
 <!-- END Card -->
 <style>

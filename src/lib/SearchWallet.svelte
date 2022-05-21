@@ -16,7 +16,6 @@
 </script>
 
 <!-- Start SearchWallet Card -->
-<div class="overflow-x-hidden t-card-shadow">
 <div class="card t-card-body">
         <div class="t-card-header p-2">
             <h2 class="inline-block text-2xl font-bold ">Miner Stats</h2>
@@ -78,7 +77,6 @@
             </div>
         </div>
         <!-- <Line data={dataLine} {options} /> -->
-</div>
 </div>
 
 <!-- END Card -->

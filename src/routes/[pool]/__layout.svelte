@@ -86,7 +86,9 @@
 
         <div class="lg:col-span-2 min-h-screen">
             <slot />
-            <Blocks {blocks} />
+            {#if ENV.DISPLAY_BLOCKS_CARD}
+                <Blocks {blocks} />
+            {/if}
         </div>
     {:else if error.type === 'api'}
         <ErrorBox error_msg="Statistics API temporarily unavailable" />

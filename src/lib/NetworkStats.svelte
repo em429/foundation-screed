@@ -3,7 +3,7 @@
     export let stats
 </script>
 
-<div class="t-card-body t-card-shadow card">
+<div class="t-card-body card">
     <div class="t-card-header">
         <h2 class="font-bold text-2xl">Network</h2>
     </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { differenceInSeconds, intervalToDuration } from 'date-fns'
 
+    import { ENV } from '$lib/env.js'
     import { average } from '$lib/utils.js'
 
     export let stats
@@ -49,9 +50,9 @@
 </script>
 
 <!-- Start Pool Card -->
-<div class="card t-card-body t-card-shadow mt-4">
+<div class="card t-card-body mt-4">
     <div class="t-card-header">
-        <h2 class="font-bold text-2xl">Pool</h2>
+        <h2 class="font-bold text-2xl">{ENV.POOL_CARD_TITLE}</h2>
     </div>
 
     <!-- Pool Stats Table -->
@@ -66,6 +67,24 @@
                             ' MH/s'}
                     </td>
                 </tr>
+                <tr>
+                    <th>Workers</th>
+                    <td>{stats?.status.workers}</td>
+                </tr>
+                <tr>
+                    <th>Fee</th>
+                    <td>{stats?.config.recipientFee * 100}%</td>
+                </tr>
+                <!--
+                <tr>
+                    <th>Effort</th>
+                    <td>{parseFloat(stats?.status.effort).toFixed(2)}</td>
+                </tr>
+                -->
+
+
+		<!-- SOLO POOL: hidden fields below -->
+                
                 <!--
                 To calculate progress:
                   First we get the difference of the estimated future block date and the last block date,
@@ -78,35 +97,20 @@
 
                   / (now_unix_timestap + est_blocktime_in_seconds)
                 -->
-                <tr>
-                    <th>Progress</th>
-                    <td>
-                        {(
-                            (seconds_since_last_block / est_seconds_to_next_block) *
-                            100
-                        ).toFixed(0)}%
-                    </td>
-                </tr>
-
-                <!--
-                <tr>
-                    <th>Effort</th>
-                    <td>{parseFloat(stats?.status.effort).toFixed(2)}</td>
-                </tr>
-                -->
-
+                {#if ENV.POOL_SHARED}
+                    <tr>
+                        <th>Progress</th>
+                        <td>
+                            {(
+                                (seconds_since_last_block / est_seconds_to_next_block) *
+                                100
+                            ).toFixed(0)}%
+                        </td>
+                    </tr>
                 <tr>
                     <!-- luck1, luck10, luck100 show the pool luck over the last x blocks-->
                     <th>Luck (last 10 blocks)</th>
                     <td>{parseFloat(stats?.status.luck.luck10)}</td>
-                </tr>
-                <tr>
-                    <th>Workers</th>
-                    <td>{stats?.status.workers}</td>
-                </tr>
-                <tr>
-                    <th>Fee</th>
-                    <td>{stats?.config.recipientFee * 100}%</td>
                 </tr>
                 <tr>
                     <th>Next Payment</th>
@@ -122,6 +126,7 @@
                              every new round after a block is found. -->
                     <td>{stats?.blocks.valid}</td>
                 </tr>
+
                 <!--
                     <tr>
                         <th>Last Found</th>
@@ -132,6 +137,7 @@
                     <th>Shares This Round</th>
                     <td>{stats?.shares.valid}</td>
                 </tr>
+
                 <tr>
                     <th>Pay System</th>
                     <td>PPLNT</td>
@@ -149,6 +155,7 @@
                         {/if}
                     </td>
                 </tr>
+                {/if}
             </tbody>
         </table>
     </div>
