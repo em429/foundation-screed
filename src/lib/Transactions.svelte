@@ -2,8 +2,6 @@
     import { page } from '$app/stores'
     import { ENV } from '$lib/env.js'
 
-    import Transition from '$lib/Transition.svelte'
-
     export let transactions = []
 
     let pathname = $page.url.pathname.split('/')[3]

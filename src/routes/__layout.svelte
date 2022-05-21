@@ -1,12 +1,4 @@
 <!-- END Outermost Container -->
-<style>
-</style>
-
-<script>
-import Transition from '$lib/Transition.svelte';
-
-</script>
-
 <script context="module">
     //import '../dark.css';
     import '../indigo-violet.css';
@@ -21,7 +13,6 @@ export async function load({ url }) {
 </script>
 
 
-<Transition>
 <!-- Outermost Container -->
 <div class="max-w-8xl min-h-screen">
     {#key currentRoute}
@@ -34,4 +25,3 @@ export async function load({ url }) {
         <a href="https://github.com/qirpi/foundation-screed">foundation-screed</a>
     </footer>
 </div>
-</Transition>
