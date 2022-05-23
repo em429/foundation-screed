@@ -4,7 +4,9 @@
 
 ![screenshot of screed](https://github.com/qirpi/foundation-screed/raw/master/screenshots/screenshot1.png)
 
-Screed is a frontend for the amazing mining-pool software [foundation-server](https://github.com/blinkhash/foundation-server) from [blinkhash](https://github.com/blinkhash)
+Screed is a unofficial frontend for the amazing mining-pool software [foundation-server](https://github.com/blinkhash/foundation-server) from [blinkhash](https://github.com/blinkhash)
+
+There is also an official frontend, currently free to use while in beta on https://blinkhash.com/
 
 ### Setup
 
