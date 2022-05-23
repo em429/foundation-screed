@@ -12,7 +12,6 @@ td {
         padding: 2px 0 2px 1px;
     }
 }
-
 </style>
 
 <script lang="ts">
@@ -24,6 +23,18 @@ export let miner
 export let my_workers
 export let stats
 export let max_miner_time
+
+// solo - shared config
+let miner_share_obj
+let miner_hashrate_obj
+
+if (ENV.POOL_SHARED) {
+    miner_hashrate_obj = miner?.hashrate.shared
+    miner_share_obj = miner?.shares.shared
+} else {
+    miner_hashrate_obj = miner?.hashrate.solo
+    miner_share_obj = miner?.shares.solo
+}
 
 export let animate = true
 export let block_reward = ENV.BLOCK_REWARD
@@ -52,88 +63,85 @@ if (
 </script>
 
 <!-- Start Miner Card -->
-    <div class="t-card-body card relative">
-        <div class="t-card-header">
-            <a sveltekit:prefetch sveltekit:noscroll href="/">
-                <button class="t-card-header-btn button align-text-bottom">
-                    <span class="icon">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-6 w-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                            />
-                        </svg>
-                    </span>
-                </button>
-            </a>
-            <h2 class="inline-block text-2xl font-bold">Miner</h2>
-            <h3
-                class="t-card-header-inactive-text absolute right-2 top-4 hidden text-sm font-bold sm:top-3 sm:inline-block sm:text-lg"
-            >
-                {$page.params.wallet}
-            </h3>
-        </div>
-
-        <!-- Miner Stats Table -->
-        <div class="grid grid-cols-1 overflow-x-auto sm:grid-cols-2">
-            <div>
-                <span class="inline-block pt-1 pl-2 text-lg font-bold">
-                    Statistics
+<div class="t-card-body card relative">
+    <div class="t-card-header">
+        <a sveltekit:prefetch sveltekit:noscroll href="/">
+            <button class="t-card-header-btn button align-text-bottom">
+                <span class="icon">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                        />
+                    </svg>
                 </span>
-                <table class="w-full table-fixed text-left">
-                    <tbody class="text-sm">
-                        <tr>
-                            <th>Hashrate</th>
-                            <!-- convert Hash to Megahash by dividing it by 1 million -->
-                            <td
-                                >{(
-                                    parseFloat(miner?.hashrate.shared) /
-                                    1000 ** 2
-                                ).toFixed(2)}
-                                <span class="text-xs">MH/s</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Workers</th>
-                            <!-- Filter out inactive workers -->
-                            <td>
-                                {my_workers?.filter((worker) => worker?.hashrate != 0)
-                                    .length}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Efficiency</th>
-                            <td>
-                                {#if miner?.shares.shared.invalid + miner?.shares.shared.stale === 0}
+            </button>
+        </a>
+        <h2 class="inline-block text-2xl font-bold">Miner</h2>
+        <h3
+            class="t-card-header-inactive-text absolute right-2 top-4 hidden text-sm font-bold sm:top-3 sm:inline-block sm:text-lg"
+        >
+            {$page.params.wallet}
+        </h3>
+    </div>
+
+    <!-- Miner Stats Table -->
+    <div class="grid grid-cols-1 overflow-x-auto sm:grid-cols-2">
+        <div>
+            <span class="inline-block pt-1 pl-2 text-lg font-bold"> Statistics </span>
+            <table class="w-full table-fixed text-left">
+                <tbody class="text-sm">
+                    <tr>
+                        <th>Hashrate</th>
+                        <!-- convert Hash to Megahash by dividing it by 1 million -->
+                        <td
+                            >{(parseFloat(miner_hashrate_obj) / 1000 ** 2).toFixed(2)}
+                            <span class="text-xs">MH/s</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Workers</th>
+                        <!-- Filter out inactive workers -->
+                        <td>
+                            {my_workers?.filter((worker) => worker?.hashrate != 0).length}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Efficiency</th>
+                        <td>
+                            {#if miner_share_obj.valid + miner_share_obj.invalid + miner_share_obj.stale > 0}
+                                {#if miner_share_obj.invalid + miner_share_obj.stale === 0}
                                     100%
                                 {:else}
-                                    {((miner?.shares.shared.invalid +
-                                        miner?.shares.shared.stale) /
-                                        miner?.shares.shared.valid) *
+                                    {((miner_share_obj.invalid + miner_share_obj.stale) /
+                                        miner_share_obj.valid) *
                                         100}
                                 {/if}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Total Shares</th>
-                            <td>
-                                {#if typeof miner?.shares.shared.valid === 'undefined'}
-                                    0
-                                {:else}
-                                    {miner?.shares.shared.valid}
-                                {/if}
-                            </td>
-                        </tr>
+                            {:else}
+                                Not enough data
+                            {/if}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Total Shares</th>
+                        <td>
+                            {#if typeof miner_share_obj.valid === 'undefined'}
+                                0
+                            {:else}
+                                {miner_share_obj.valid}
+                            {/if}
+                        </td>
+                    </tr>
 
-                        {#if ENV.POOL_SHARED}
+                    {#if ENV.POOL_SHARED}
                         <!-- The Miner Round Share is the miners current share percent of the
                              block reward for the current round. -->
                         <tr>
@@ -197,38 +205,38 @@ a                    The essence of the formula used is the same for all Pay Sys
                                 {/if}
                             </td>
                         </tr>
-                        {/if}
-                    </tbody>
-                </table>
-            </div>
+                    {/if}
+                </tbody>
+            </table>
+        </div>
 
-            <div class="">
-                <span class="text-lg mt-2 inline-block pl-2 font-bold sm:mt-1 sm:p-0">
-                    Payments & Balances
-                </span>
-                <table class="w-full right-table table-fixed text-left">
-                    <tbody class="text-sm">
-                        <tr>
-                            <th>Unconfirmed</th>
-                            <td>{miner?.payments.immature}</td>
-                        </tr>
-                        {#if ENV.POOL_SHARED}
+        <div class="">
+            <span class="mt-2 inline-block pl-2 text-lg font-bold sm:mt-1 sm:p-0">
+                Payments & Balances
+            </span>
+            <table class="right-table w-full table-fixed text-left">
+                <tbody class="text-sm">
+                    <tr>
+                        <th>Unconfirmed</th>
+                        <td>{miner?.payments.immature}</td>
+                    </tr>
+                    {#if ENV.POOL_SHARED}
                         <tr>
                             <th>Unpaid</th>
                             <td>{miner?.payments.balances}</td>
                         </tr>
-                        {/if}
-                        <tr>
-                            <th>Validated</th>
-                            <td>{miner?.payments.generate}</td>
-                        </tr>
-                        <tr>
-                            <th>Total Paid</th>
-                            <td>{miner?.payments.paid}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    {/if}
+                    <tr>
+                        <th>Validated</th>
+                        <td>{miner?.payments.generate}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Paid</th>
+                        <td>{miner?.payments.paid}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <!-- END miner Stats Table -->
     </div>
+    <!-- END miner Stats Table -->
+</div>

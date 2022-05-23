@@ -77,8 +77,11 @@
 <div
     class="container mx-auto grid max-w-6xl grid-cols-1 lg:grid-cols-3 items-start gap-4 p-4"
 >
-
-    {#if error.type === 'none'}
+    {#if typeof stats === 'undefined' && error.type === 'none'}
+        <!-- Handle if requested pool doesnt exist
+    	       redirect to special error page -->
+        <MissingPool />
+    {:else if error.type === 'none'}
         <div class="lg:col-span-1">
             <NetworkStats {stats} />
             <Pool {stats} {blocks} {historical} />
@@ -92,10 +95,6 @@
         </div>
     {:else if error.type === 'api'}
         <ErrorBox error_msg="Statistics API temporarily unavailable" />
-    {:else if typeof stats === 'undefined' && error.type === 'none'}
-        <!-- Handle if requested pool doesnt exist
-    	       redirect to special error page -->
-        <MissingPool />
     {:else if error.type === 'limiter'}
         <ErrorBox error_msg="Too many requests!" />
     {:else}

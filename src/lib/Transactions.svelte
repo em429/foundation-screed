@@ -80,10 +80,17 @@
                     {/if}
 
                 {#if transactions.length === 0}
-                <div class="p-2">
-                    <p>
+                <div class="content p-2">
+                    <h5 class="subheading">
                         The transaction validation API is currently unavailable, please
                         check back in a few minutes.
+                        </h5>
+                    <p>
+                        Payments won't be affected by this error as they are done from a
+                        dedicated node.
+                        <br><br>
+
+                        If this problem persists, please contact <a href="mailto:{ENV.SUPPORT_EMAIL}">{ENV.SUPPORT_EMAIL}</a>
                     </p>
                 </div>
                 {/if}

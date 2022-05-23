@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+    Theme styles applied globally
+*/
+
+/* root background color */
+:root {
+    @apply bg-violet-50;
+}
+
+/* table row hover style */
+tbody tr {
+    @apply hover:bg-indigo-50 transition duration-200;
+
+}
+
+thead {
+    @apply border-violet-200
+}
+
+input {
+    @apply accent-indigo-500;
+}
+
+/*
+    Rest of the theme is applied using namespaced css classes (e.g. t-card-body-fg)
+*/
+
+
+.t-card-header {
+  @apply p-2;
+  @apply bg-violet-200 text-violet-800 hover:text-violet-900;
+  @apply border-b border-violet-300;
+}
+
+.t-card-header-inactive-text {
+    @apply text-violet-400 hover:text-violet-900 transition-all;
+
+}
+.t-card-header-btn {
+    @apply bg-violet-300 text-violet-800;
+}
+
+
+.t-card-body {
+    @apply shadow shadow-violet-200;
+    @apply p-0 overflow-x-auto min-h-fit;
+    @apply border-none rounded-lg;
+    @apply bg-white text-violet-800;
+}
+
+.t-primary-btn {
+    /* ~indigo is a a17t special variable */
+    @apply ~indigo;
+}
+
+.t-primary-input {
+    @apply ~indigo placeholder:text-indigo-600/40;
+}
+
+.t-block-icon-color {
+    @apply text-indigo-600;
+}
+
+.t-footer-text {
+    @apply text-violet-400 text-xs;
+
+}

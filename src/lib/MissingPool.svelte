@@ -5,7 +5,7 @@
         return {
             status: 302,
             // TODO: replace with $default_pool from config
-            redirect: '/Bitcoin',
+            redirect: ENV.DEFAULT_COIN_ENDPOINT,
         }
     }
 
@@ -31,7 +31,7 @@
     <h1>Requested pool doesn't exist!</h1>
     <h2>Try the below:</h2>
     <!-- TODO: Replace with dynamic config -->
-    <a class="text-2xl" href="/Bitcoin">Bitcoin</a>
+    <a class="text-2xl" href="{ENV.DEFAULT_COIN_ENDPOINT}">{ENV.DEFAULT_COIN_ENDPOINT}</a>
 
 <!--    {#each pools || [] as pool}
         <a class="text-2xl" href=`${pool_url}/${pool_name}`>${pool}</a>
