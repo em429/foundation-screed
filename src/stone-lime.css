@@ -42,6 +42,12 @@ input {
     @apply bg-stone-300 text-stone-800;
 }
 
+/* For some reason, a17t classes don't work in mdsvex templates, but work when
+   at least one of them is applied through a custom class.. */
+.btn {
+    @apply button ~lime;
+}
+
 
 .t-card-body {
     @apply shadow shadow-stone-200;

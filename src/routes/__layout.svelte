@@ -14,15 +14,7 @@ export async function load({ url }) {
 </script>
 
 
-<!-- Outermost Container -->
-<div class="max-w-8xl min-h-screen">
-    {#key currentRoute}
-        <slot />
-    {/key}
+{#key currentRoute}
+    <slot />
+{/key}
 
-    <footer class="t-footer-text m-auto my-10 block max-w-xs text-center">
-        powered by <a href="https://github.com/blinkhash/foundation-server">foundation</a>
-        and
-        <a href="https://github.com/qirpi/foundation-screed">foundation-screed</a>
-    </footer>
-</div>

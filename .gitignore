@@ -2,8 +2,10 @@ build/
 node_modules/
 
 static/favicon.ico
+static/pool.mp4
 
 src/lib/env.js
+src/LandingPage.md
 
 # Nix
 result

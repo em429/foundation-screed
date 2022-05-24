@@ -74,6 +74,7 @@
 </svelte:head>
 
 <!-- Start Grid Container -->
+<div class="min-h-screen">
 <div
     class="container mx-auto grid max-w-6xl grid-cols-1 lg:grid-cols-3 items-start gap-4 p-4"
 >
@@ -102,3 +103,10 @@
     {/if}
 </div>
 <!-- END GRID container -->
+</div>
+
+<footer class="t-footer-text m-auto my-10 block max-w-xs text-center">
+    powered by <a href="https://github.com/blinkhash/foundation-server">foundation</a>
+    and
+    <a href="https://github.com/qirpi/foundation-screed">foundation-screed</a>
+</footer>
