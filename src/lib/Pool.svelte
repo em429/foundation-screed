@@ -8,15 +8,25 @@ td {
 }
 </style>
 
-<script lang="ts">
-import { differenceInSeconds, intervalToDuration } from 'date-fns'
 
-import { ENV } from '$lib/env.js'
-import { average } from '$lib/utils.js'
-
+<script>
 export let stats
 export let blocks
 export let historical
+
+import { appSettingsStore } from '$lib/stores.js'
+const {
+    SCD_POOL_HASHRATE_DISPLAY_UNIT,
+    SCD_POOL_SHARED,
+    SCD_POOL_CARD_TITLE,
+} = $appSettingsStore
+const hashrate_display = getHashrateMultiplier(SCD_POOL_HASHRATE_DISPLAY_UNIT)
+
+import { getHashrateMultiplier } from '$lib/utils.js'
+import { differenceInSeconds, intervalToDuration } from 'date-fns'
+import { average } from '$lib/utils.js'
+
+
 let last_5_historical = []
 let last_5_hashrate = []
 let hashrate_obj
@@ -25,7 +35,7 @@ let hashrate_obj
 last_5_historical = historical?.slice(-5)
 
 last_5_historical?.map((obj) => {
-    if (ENV.POOL_SHARED) {
+    if (SCD_POOL_SHARED) {
         hashrate_obj = obj.hashrate.shared
     } else {
         hashrate_obj = obj.hashrate.solo
@@ -56,12 +66,13 @@ let seconds_since_last_block = differenceInSeconds(
     new Date().getTime(),
     blocks?.confirmed[0]?.time
 )
+
 </script>
 
 <!-- Start Pool Card -->
 <div class="t-card-body card mt-4">
     <div class="t-card-header">
-        <h2 class="text-2xl font-bold">{ENV.POOL_CARD_TITLE}</h2>
+        <h2 class="text-2xl font-bold">{SCD_POOL_CARD_TITLE}</h2>
     </div>
 
     <!-- Pool Stats Table -->
@@ -71,8 +82,9 @@ let seconds_since_last_block = differenceInSeconds(
                 <tr>
                     <th>Hashrate</th>
                     <!-- convert hash to megahash by dividing by 1 mil -->
+                    <!-- TODO: add env var for unit -->
                     <td class="font-bold italic">
-                        {(avg_hashrate / 1000 ** 2).toFixed(2) + ' MH/s'}
+                        {(avg_hashrate / 1000 ** 2).toFixed(2) + ' ' + hashrate_display.unit_short_name}
                     </td>
                 </tr>
                 <!-- Hide if no hashrate to avoid displaying a worker count from shared pool when
@@ -111,8 +123,7 @@ let seconds_since_last_block = differenceInSeconds(
 
                 <!-- Values below only displayed on shared pools
                 -->
-                {#if ENV.POOL_SHARED}
-
+                {#if SCD_POOL_SHARED}
                     <!-- Hide Progress if pool hashrate is 0 -->
                     {#if avg_hashrate > 0}
                         <tr>
@@ -166,16 +177,16 @@ let seconds_since_last_block = differenceInSeconds(
         	           Hide if pool hashrate is 0
         	    -->
                     {#if avg_hashrate > 0}
-                    <tr>
-                        <th>Est.Avg. Time</th>
-                        <td>
-                            {#if est_avg_blocktime === 0}
-                                N/A
-                            {:else}
-                                {est_avg_blocktime.days}d {est_avg_blocktime.hours}h {est_avg_blocktime.minutes}m
-                            {/if}
-                        </td>
-                    </tr>
+                        <tr>
+                            <th>Est.Avg. Time</th>
+                            <td>
+                                {#if est_avg_blocktime === 0}
+                                    N/A
+                                {:else}
+                                    {est_avg_blocktime.days}d {est_avg_blocktime.hours}h {est_avg_blocktime.minutes}m
+                                {/if}
+                            </td>
+                        </tr>
                     {/if}
                 {/if}
             </tbody>

@@ -1,11 +1,32 @@
-<script lang="ts">
-    import { ENV } from '$lib/env.js'
-    export let stats
+<style>
+th {
+    padding: 4px 0 2px 8px;
+}
+td {
+    padding: 4px 0 2px 8px;
+}
+</style>
+
+<script>
+export let stats
+
+import { getHashrateMultiplier } from '$lib/utils.js'
+
+import { appSettingsStore } from '$lib/stores.js'
+const {
+    SCD_NETWORK_HASHRATE_DISPLAY_UNIT,
+    SCD_BLOCK_EXPLORER_URL,
+    SCD_BLOCK_TIME_IN_SECONDS,
+    SCD_BLOCK_TIME_UNIT,
+    SCD_BLOCK_TIME_UNIT_DIVIDER,
+} = $appSettingsStore
+
+const hashrate_display = getHashrateMultiplier(SCD_NETWORK_HASHRATE_DISPLAY_UNIT)
 </script>
 
 <div class="t-card-body card">
     <div class="t-card-header">
-        <h2 class="font-bold text-2xl">Network</h2>
+        <h2 class="text-2xl font-bold">Network</h2>
     </div>
 
     <!-- Network Stats Table -->
@@ -15,8 +36,12 @@
                 <tr>
                     <th>Hashrate</th>
                     <td class="font-bold italic">
-                        {(parseFloat(stats?.network.hashrate) / ENV.HASHRATE_DISPLAY_MULTIPLIER).toFixed(2) +
-                            ' ' + ENV.HASHRATE_DISPLAY_UNIT}
+                        {(
+                            parseFloat(stats?.network.hashrate) /
+                            hashrate_display.multiplier
+                        ).toFixed(2) +
+                            ' ' +
+                            hashrate_display.unit_short_name}
                     </td>
                 </tr>
                 <tr>
@@ -27,7 +52,7 @@
                     <th>Block Height</th>
                     <td>
                         <!-- Block icon -->
-                        <span class="icon t-block-icon-color mb-1 mr-[-2px]">
+                        <span class="t-block-icon-color icon mb-1 mr-[-2px]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-6 w-6"
@@ -45,8 +70,7 @@
                         </span>
                         <a
                             target="_blank"
-                            href="{ENV.BLOCK_EXPLORER_URL}/{stats?.network
-                                .height}"
+                            href="{SCD_BLOCK_EXPLORER_URL}/{stats?.network.height}"
                             class="underline decoration-dotted hover:decoration-solid"
                         >
                             {[
@@ -61,7 +85,10 @@
                 </tr>
                 <tr>
                     <th>Block Time</th>
-                    <td>{ENV.BLOCK_TIME_IN_SECONDS / ENV.BLOCK_TIME_UNIT_DIVIDER} {ENV.BLOCK_TIME_UNIT}</td>
+                    <td
+                        >{SCD_BLOCK_TIME_IN_SECONDS / SCD_BLOCK_TIME_UNIT_DIVIDER}
+                        {SCD_BLOCK_TIME_UNIT}</td
+                    >
                 </tr>
 
                 <!--
@@ -77,12 +104,3 @@
     <!-- END Network Stats Table -->
     <!-- END card-body -->
 </div>
-
-<style>
-    th {
-        padding: 4px 0 2px 8px;
-    }
-    td {
-        padding: 4px 0 2px 8px;
-    }
-</style>

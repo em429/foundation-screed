@@ -1,5 +1,4 @@
 <script context="module">
-    import { ENV } from '$lib/env.js'
 
     //let stats
 

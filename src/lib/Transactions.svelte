@@ -1,8 +1,14 @@
 <script lang="ts">
-    import { page } from '$app/stores'
-    import { ENV } from '$lib/env.js'
-
     export let transactions = []
+
+    import { page } from '$app/stores'
+
+    import { appSettingsStore } from '$lib/stores.js'
+
+    const {
+        SCD_TX_EXPLORER_URL,
+        SCD_SUPPORT_EMAIL,
+    } = $appSettingsStore
 
     let pathname = $page.url.pathname.split('/')[3]
 </script>
@@ -66,7 +72,7 @@
                                         <a
                                             target="_blank"
                                             class="underline decoration-dotted hover:decoration-solid"
-                                            href="{ENV.TX_EXPLORER_URL}/{tx?.txid}"
+                                            href="{SCD_TX_EXPLORER_URL}/{tx?.txid}"
                                         >
                                             {tx?.txid}
                                         </a>
@@ -90,7 +96,7 @@
                         dedicated node.
                         <br><br>
 
-                        If this problem persists, please contact <a href="mailto:{ENV.SUPPORT_EMAIL}">{ENV.SUPPORT_EMAIL}</a>
+                        If this problem persists, please contact <a href="mailto:{SCD_SUPPORT_EMAIL}">{SCD_SUPPORT_EMAIL}</a>
                     </p>
                 </div>
                 {/if}

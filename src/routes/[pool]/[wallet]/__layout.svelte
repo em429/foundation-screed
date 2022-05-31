@@ -1,28 +1,26 @@
 <script context="module">
-    import { ENV } from '$lib/env.js'
     import ErrorBox from '$lib/ErrorBox.svelte'
-
+    import { appSettingsStore } from '$lib/stores.js'
+    import { get } from 'svelte/store'
     import { handleError } from '$lib/utils.js'
-
-    let stats
-    let max_miner_time
 
     let error = { type: 'none', message: '' }
 
     export async function load({ url, fetch, params, stuff }) {
         const { wallet, pool } = params
-        stats = stuff?.stats
+        const ENV = get(appSettingsStore)
+        let stats = stuff?.stats
 
         let miner_json = await fetch(
-            `${ENV.FOUNDATION_API_BASE}/${pool}/miners?method=${wallet}`
+            `${ENV.SCD_FOUNDATION_API_BASE}/${pool}/miners?method=${wallet}`
         ).then((r) => r.json()).catch(e => error = handleError(e))
 
         let active_miners_json = await fetch(
-            `${ENV.FOUNDATION_API_BASE}/${pool}/miners?method=active`
+            `${ENV.SCD_FOUNDATION_API_BASE}/${pool}/miners?method=active`
         ).then((r) => r.json()).catch(e => error = handleError(e))
         let active_miners = active_miners_json?.body?.primary
 
-        let workers_json = await fetch(`${ENV.FOUNDATION_API_BASE}/${pool}/workers`).then(
+        let workers_json = await fetch(`${ENV.SCD_FOUNDATION_API_BASE}/${pool}/workers`).then(
             (r) => r.json()
         ).catch(e => error = handleError(e))
         let workers = workers_json?.body?.primary
@@ -33,7 +31,7 @@
         )
 
         // Find the maximum miner time value
-        max_miner_time = Math.max.apply(
+        let max_miner_time = Math.max.apply(
             Math,
             active_miners?.shared?.map(function (object) {
                 return object.times
@@ -48,8 +46,8 @@
             props: {
                 miner: miner_json?.body?.primary,
                 max_miner_time: max_miner_time,
-                workers,
-                my_workers,
+                my_workers: my_workers,
+                stats: stats,
             },
         }
     }
@@ -59,12 +57,11 @@
     import Miner from '$lib/Miner.svelte'
     export let miner
     export let my_workers
-    // NOTE: there is no 'export let stats' because it is passed using 'stuff' feature
-    //       of SvelteKit which is suited for values that have to be passed to multiple
-    //       components. It is passed down with 'blocks' from the top __layout component.
+    export let max_miner_time
+    export let stats
 </script>
 
-<!-- TODO: replace error handling with component -->
+<!-- TODO: add error messages as option to component, instead of repeating them -->
 {#if error.type === 'none'}
     <Miner {miner} {max_miner_time} {stats} {my_workers} />
     <slot />
@@ -75,3 +72,4 @@
 {:else}
         <ErrorBox error_msg="An unknown error occured with the statistics API" />
 {/if}
+

@@ -10,7 +10,13 @@ td {
 
 <script lang="ts">
 import { page } from '$app/stores'
-import { ENV } from '$lib/env.js'
+
+import { appSettingsStore } from '$lib/stores.js'
+const {
+    SCD_WORKER_HASHRATE_DISPLAY_MULTIPLIER,
+    SCD_WORKER_HASHRATE_DISPLAY_UNIT,
+    SCD_POOL_SHARED,
+} = $appSettingsStore
 
 export let miner
 export let my_workers = []
@@ -18,7 +24,7 @@ export let my_workers = []
 let miner_work_obj = miner?.work.shared
 let miner_times_obj = miner?.times.shared
 
-if (!ENV.POOL_SHARED) {
+if (!SCD_POOL_SHARED) {
     miner_work_obj = miner?.work.solo
     miner_times_obj = miner?.times.solo
 }
@@ -69,10 +75,10 @@ if (!ENV.POOL_SHARED) {
                                 <td>
                                     {(
                                         parseFloat(worker?.hashrate) /
-                                        ENV.WORKER_HASHRATE_DISPLAY_MULTIPLIER
+                                        SCD_WORKER_HASHRATE_DISPLAY_MULTIPLIER
                                     ).toFixed(2)}
                                     <span class="text-xs"
-                                        >{ENV.WORKER_HASHRATE_DISPLAY_UNIT}/s</span
+                                        >{SCD_WORKER_HASHRATE_DISPLAY_UNIT}/s</span
                                     >
                                 </td>
                                 <td>{worker?.shares.valid}</td>

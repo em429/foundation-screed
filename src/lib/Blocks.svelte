@@ -9,9 +9,12 @@ td {
 </style>
 
 <script lang="ts">
-import { ENV } from '$lib/env.js'
-
 export let blocks = { confirmed: [], pending: [], kicked: [] }
+
+import { appSettingsStore } from '$lib/stores.js'
+const {
+    SCD_BLOCK_EXPLORER_URL,
+} = $appSettingsStore
 
 // Augment block arrays coming from the API so they can be easily looped
 //   over in the template as one array.
@@ -77,7 +80,7 @@ blocks?.kicked.forEach((obj) => (obj['confirm'] = 'kicked'))
                             <a
                                 target="_blank"
                                 class="underline decoration-dotted hover:decoration-solid"
-                                href="{ENV.BLOCK_EXPLORER_URL}/{block?.height}"
+                                href="{SCD_BLOCK_EXPLORER_URL}/{block?.height}"
                             >
                                 {[
                                     block?.height.toString().slice(0, 1),

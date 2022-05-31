@@ -15,9 +15,10 @@ td {
 </style>
 
 <script lang="ts">
-import { ENV } from '$lib/env.js'
+import { page } from '$app/stores'
 
-import { page, navigating } from '$app/stores'
+import { appSettingsStore } from '$lib/stores.js'
+const { SCD_BLOCK_REWARD, SCD_POOL_SHARED, SCD_DEFAULT_COIN_ENDPOINT } = $appSettingsStore
 
 export let miner
 export let my_workers
@@ -28,7 +29,7 @@ export let max_miner_time
 let miner_share_obj
 let miner_hashrate_obj
 
-if (ENV.POOL_SHARED) {
+if (SCD_POOL_SHARED) {
     miner_hashrate_obj = miner?.hashrate.shared
     miner_share_obj = miner?.shares.shared
 } else {
@@ -36,36 +37,13 @@ if (ENV.POOL_SHARED) {
     miner_share_obj = miner?.shares.solo
 }
 
-export let animate = true
-export let block_reward = ENV.BLOCK_REWARD
-
-// Extra polish for transitions: only animate the element that is really changing
-//   Animate the Miner card only when navigating to, or from the pool index. Do not
-//   animate when clicking between 'My Workers' and 'My Transactions' tabs.
-//
-// NOTE: IF animate is initialized as 'false' here, there would be a small glitch the
-//       first time 'My Transactions' is clicked after coming from the pool index page.
-//
-//       Not sure why is this, but initializing animate as true and changing the logic to
-//       the reverse fixed the glitch.
-if (
-    $navigating?.to.pathname.endsWith(`/${$page.params.wallet}/tx`) &&
-    $navigating?.from.pathname.endsWith(`${$page.params.wallet}`)
-) {
-    animate = false
-}
-if (
-    $navigating?.to.pathname.endsWith(`/${$page.params.wallet}`) &&
-    $navigating?.from.pathname.endsWith(`${$page.params.wallet}/tx`)
-) {
-    animate = false
-}
+export let block_reward = SCD_BLOCK_REWARD
 </script>
 
 <!-- Start Miner Card -->
 <div class="t-card-body card relative">
     <div class="t-card-header">
-        <a sveltekit:prefetch sveltekit:noscroll href="/">
+        <a sveltekit:prefetch sveltekit:noscroll href="{SCD_DEFAULT_COIN_ENDPOINT}">
             <button class="t-card-header-btn button align-text-bottom">
                 <span class="icon">
                     <svg
@@ -141,7 +119,7 @@ if (
                         </td>
                     </tr>
 
-                    {#if ENV.POOL_SHARED}
+                    {#if SCD_POOL_SHARED}
                         <!-- The Miner Round Share is the miners current share percent of the
                              block reward for the current round. -->
                         <tr>
@@ -220,7 +198,7 @@ a                    The essence of the formula used is the same for all Pay Sys
                         <th>Unconfirmed</th>
                         <td>{miner?.payments.immature}</td>
                     </tr>
-                    {#if ENV.POOL_SHARED}
+                    {#if SCD_POOL_SHARED}
                         <tr>
                             <th>Unpaid</th>
                             <td>{miner?.payments.balances}</td>

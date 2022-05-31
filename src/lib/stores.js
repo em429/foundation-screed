@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
 
-const theme = writable('light')
+const appSettingsStore = writable({})
 
-export { theme }
+export { appSettingsStore }

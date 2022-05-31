@@ -11,15 +11,9 @@ const config = {
     // for more information about preprocessors
     preprocess: [preprocess(), mdsvex(mdsvexConfig)],
 
-    //ssr: true
+    ssr: true,
     kit: {
         adapter: adapter(),
-        // vite: {
-        //     define: {
-        // 	    'process.env': process.env,
-        //     }
-
-        // }
     },
 }
 

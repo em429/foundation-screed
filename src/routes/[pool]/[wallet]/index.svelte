@@ -1,17 +1,21 @@
 <script context="module">
-    let miner
-    let my_workers
+export async function load({ stuff }) {
+    let miner = stuff?.miner
+    let my_workers = stuff?.my_workers
 
-    export async function load({ stuff }) {
-        miner = stuff?.miner
-        my_workers = stuff?.my_workers
-
-        return { props: {} }
+    return {
+        props: {
+            miner,
+            my_workers,
+        },
     }
+}
 </script>
 
 <script>
-    import Workers from '$lib/Workers.svelte'
+import Workers from '$lib/Workers.svelte'
+export let miner
+export let my_workers
 </script>
 
 <Workers {miner} {my_workers} />
