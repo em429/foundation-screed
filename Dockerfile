@@ -1,6 +1,6 @@
 FROM node:16-slim@sha256:c51416d582339a0f9f5f8da347a2dd8b585e1f5893a627e9b3a208351493b2b4
 
-WORKDIR /screed-kit
+WORKDIR /foundation-screed
 RUN chown -R node:node ./
 USER node
 
