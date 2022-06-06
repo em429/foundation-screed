@@ -1,6 +1,6 @@
 import { defineMDSveXConfig as defineConfig } from 'mdsvex'
 
-const config = defineConfig({
+const mdsvexConfig = defineConfig({
     extensions: ['.svelte.md', '.md', '.svx'],
 
     smartypants: {
@@ -11,4 +11,4 @@ const config = defineConfig({
     rehypePlugins: [],
 })
 
-export default config
+export default mdsvexConfig

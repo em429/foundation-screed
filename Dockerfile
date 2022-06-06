@@ -11,6 +11,7 @@ COPY package-lock.json .
 COPY postcss.config.cjs .
 COPY tailwind.config.cjs .
 COPY svelte.config.js .
+COPY mdsvex.config.js .
 COPY tsconfig.json .
 
 RUN npm clean-install && npm cache clean --force
