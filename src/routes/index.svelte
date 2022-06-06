@@ -9,7 +9,7 @@ import { appSettingsStore } from '$lib/stores'
 import { get } from 'svelte/store';
 
 // TODO: figure out how to do landingpages without building separately per instance
-import LandingPage from '../LandingPage.md'
+import LandingPage from '$lib/landing/LandingPage.md'
 
 export async function load() {
     // If Landing page feature is disabled, redirect straight
