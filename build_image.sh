@@ -1,6 +1,7 @@
 #!/bin/bash
 # Build an oci-container image from current commit, tag it and upload to DockerHub
-podman login
+
+eval $(pass dockerhub/cli_login)
 
 image_name="qirpi/foundation-screed"
 commit_hash=$(git rev-parse --short HEAD)
