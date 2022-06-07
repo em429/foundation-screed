@@ -1,15 +1,6 @@
 <script context="module">
-// Supply your own landing page if you enable it, it's not included
-// in the repo by default.
-//
-// You can mix and match Markdown and regular svelte code as you wish.
-// Check out mdsvex.com for more info
-//
 import { appSettingsStore } from '$lib/stores'
 import { get } from 'svelte/store';
-
-// TODO: figure out how to do landingpages without building separately per instance
-import LandingPage from '../LandingPage.md'
 
 export async function load() {
     // If Landing page feature is disabled, redirect straight
@@ -36,13 +27,12 @@ const { SCD_DEFAULT_COIN_ENDPOINT } = $appSettingsStore
 
 </script>
 
-<div class="p-4 my-20 max-w-3xl mx-auto">
+<div class="p-4 my-20 max-w-7xl mx-auto">
 
-<LandingPage />
 
 <div class="mt-14 text-center">
     <a href="{SCD_DEFAULT_COIN_ENDPOINT}">
-    <button class="font-bold btn text-2xl">View Stats</button>
+    <button class="font-bold btn text-2xl">Start Mining</button>
     </a>
 </div>
 

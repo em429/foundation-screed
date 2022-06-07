@@ -36,7 +36,6 @@
     "dependencies": {
         "a17t": "^0.10.1",
         "bitcoind-rpc": "^0.9.1",
-        "mdsvex": "^0.10.5",
         "date-fns": "^2.28.0",
         "svelte-chartjs": "^1.1.4",
         "svelte2tsx": "^0.5.6"

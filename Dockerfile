@@ -11,10 +11,9 @@ COPY package-lock.json .
 COPY postcss.config.cjs .
 COPY tailwind.config.cjs .
 COPY svelte.config.js .
-COPY mdsvex.config.js .
 COPY tsconfig.json .
 
-RUN npm install
+RUN npm clean-install
 
 ENV NODE_ENV production
 RUN npm run build
