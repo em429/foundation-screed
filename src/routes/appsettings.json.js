@@ -24,8 +24,6 @@ export async function get() {
             // 	        and add a config option to make pool solo or shared only
             SCD_POOL_SHARED: toBool(process.env["SCD_POOL_SHARED"]) || true,
 
-            // If disabled, root route (/) will redirect to default coin
-            SCD_ENABLE_LANDING_PAGE: toBool(process.env["SCD_ENABLE_LANDING_PAGE"]) || false,
             SCD_DEFAULT_COIN_ENDPOINT: process.env["SCD_DEFAULT_COIN_ENDPOINT"] || "/Bitcoin",
 
             // Whether to hide blocks card or not

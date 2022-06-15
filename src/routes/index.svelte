@@ -3,20 +3,14 @@ import { appSettingsStore } from '$lib/stores'
 import { get } from 'svelte/store';
 
 export async function load() {
-    // If Landing page feature is disabled, redirect straight
-    // to the default coin page
+
     const ENV = get(appSettingsStore)
+      return {
+          status: 302,
+          redirect: ENV.SCD_DEFAULT_COIN_ENDPOINT,
+      }
 
-    let landing_enabled = ENV.SCD_ENABLE_LANDING_PAGE
-
-    if (! ENV.SCD_ENABLE_LANDING_PAGE) {
-        return {
-            status: 302,
-            redirect: ENV.SCD_DEFAULT_COIN_ENDPOINT,
-        }
-    }
-
-    return { props: { } }
+    // return { props: { } }
 }
 
 </script>
