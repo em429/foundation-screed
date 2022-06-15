@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Build an oci-container image from current commit, tag it and upload to DockerHub
 
 eval $(pass dockerhub/cli_login)
