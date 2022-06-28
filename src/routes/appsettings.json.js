@@ -15,6 +15,8 @@ export async function get() {
             SCD_STRATUM_URL: process.env["SCD_STRATUM_URL"] || "lottononce.com",
             SCD_POOL_CARD_TITLE: process.env["SCD_POOL_CARD_TITLE"] || "Pool",
             SCD_SUPPORT_EMAIL: process.env["SCD_SUPPORT_EMAIL"] || "support@example.com",
+
+            SCD_ENABLE_TRANSACTIONS_TAB: toBool(process.env["SCD_ENABLE_TRANSACTIONS_TAB"]) || false,
             
             // Shared or solo pool?
             // 	  Setting to false will hide the fields that don't make sense
@@ -22,14 +24,14 @@ export async function get() {
             //
             // 	  TODO: create a writeable store for triggering between solo/shared by default
             // 	        and add a config option to make pool solo or shared only
-            SCD_POOL_SHARED: toBool(process.env["SCD_POOL_SHARED"]) || true,
+            SCD_POOL_SHARED: toBool(process.env["SCD_POOL_SHARED"]) || false,
 
             SCD_DEFAULT_COIN_ENDPOINT: process.env["SCD_DEFAULT_COIN_ENDPOINT"] || "/Bitcoin",
 
             // Whether to hide blocks card or not
             // Useful for solo pools, or pools just starting wishing to hide an empty
             // block list.
-            SCD_HIDE_BLOCKS_CARD: toBool(process.env["SCD_HIDE_BLOCKS_CARD"]) || false,
+            SCD_HIDE_BLOCKS_CARD: toBool(process.env["SCD_HIDE_BLOCKS_CARD"]) || true,
 
             // Default: BTC current block reward
             SCD_BLOCK_REWARD: parseFloat(process.env["SCD_BLOCK_REWARD"]) || 6.25,
