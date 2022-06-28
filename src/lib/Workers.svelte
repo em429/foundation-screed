@@ -9,6 +9,7 @@ td {
 </style>
 
 <script lang="ts">
+
 import { page } from '$app/stores'
 
 import { appSettingsStore } from '$lib/stores.js'
@@ -18,16 +19,23 @@ const {
     SCD_POOL_SHARED,
 } = $appSettingsStore
 
+import { getHashrateMultiplier } from '$lib/utils.js'
+const hashrate_display = getHashrateMultiplier(SCD_WORKER_HASHRATE_DISPLAY_UNIT)
+
 export let miner
 export let my_workers = []
 
 let miner_work_obj = miner?.work.shared
 let miner_times_obj = miner?.times.shared
 
+console.log(miner_work_obj)
+console.log(miner_times_obj)
+
 if (!SCD_POOL_SHARED) {
     miner_work_obj = miner?.work.solo
     miner_times_obj = miner?.times.solo
 }
+
 </script>
 
 <!-- Start Workers Card -->
@@ -64,7 +72,7 @@ if (!SCD_POOL_SHARED) {
                         <th>Worker Name</th>
                         <th>Hashrate</th>
                         <th>Total Shares</th>
-                        <th>Time (%)</th>
+                        <!-- <th>Time (%)</th> -->
                         <th>Work (%)</th>
                     </tr>
                 </thead>
@@ -73,22 +81,26 @@ if (!SCD_POOL_SHARED) {
                     {#each my_workers || [] as worker}
                         {#if worker?.hashrate !== 0}
                             <tr>
-                                <td>{worker?.worker.split('.')[1]}</td>
+                                <td>{worker?.worker.split('.')[1] || "Unnamed Rig"}</td>
                                 <td>
                                     {(
                                         parseFloat(worker?.hashrate) /
-                                        SCD_WORKER_HASHRATE_DISPLAY_MULTIPLIER
+                                        hashrate_display.multiplier
                                     ).toFixed(2)}
                                     <span class="text-xs"
-                                        >{SCD_WORKER_HASHRATE_DISPLAY_UNIT}/s</span
+                                        >{hashrate_display.unit_short_name}</span
                                     >
                                 </td>
                                 <td>{worker?.shares.valid}</td>
-                                <td
-                                    >{((worker?.times / miner_times_obj) * 100).toFixed(
+                                <!--<td
+                                    >
+                                    {console.log(worker.time)}
+
+                                    {((worker?.times / miner_times_obj) * 100).toFixed(
                                         1
                                     )}%</td
                                 >
+                                -->
                                 <td
                                     >{((worker?.work / miner_work_obj) * 100).toFixed(
                                         1

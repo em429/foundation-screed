@@ -26,14 +26,15 @@
         let workers = workers_json?.body?.primary
 
         // Filter workers object to only contain our wallet's rigs
-        let my_workers = workers?.shared?.filter(
+        // NOTE: FIXME: TEMPORARY SET TO SOLO
+        let my_workers = workers?.solo?.filter(
             (worker) => worker?.worker.split('.')[0] === wallet
         )
 
         // Find the maximum miner time value
         let max_miner_time = Math.max.apply(
             Math,
-            active_miners?.shared?.map(function (object) {
+            active_miners?.solo?.map(function (object) {
                 return object.times
             })
         )

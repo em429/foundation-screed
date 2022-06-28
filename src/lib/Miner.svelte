@@ -18,7 +18,7 @@ td {
 import { page } from '$app/stores'
 
 import { appSettingsStore } from '$lib/stores.js'
-const { SCD_BLOCK_REWARD, SCD_POOL_SHARED, SCD_DEFAULT_COIN_ENDPOINT } = $appSettingsStore
+const { SCD_WORKER_HASHRATE_DISPLAY_UNIT, SCD_BLOCK_REWARD, SCD_POOL_SHARED, SCD_DEFAULT_COIN_ENDPOINT } = $appSettingsStore
 
 export let miner
 export let my_workers
@@ -36,6 +36,9 @@ if (SCD_POOL_SHARED) {
     miner_hashrate_obj = miner?.hashrate.solo
     miner_share_obj = miner?.shares.solo
 }
+
+import { getHashrateMultiplier } from '$lib/utils.js'
+const hashrate_display = getHashrateMultiplier(SCD_WORKER_HASHRATE_DISPLAY_UNIT)
 
 export let block_reward = SCD_BLOCK_REWARD
 </script>
@@ -81,8 +84,8 @@ export let block_reward = SCD_BLOCK_REWARD
                         <th>Hashrate</th>
                         <!-- convert Hash to Megahash by dividing it by 1 million -->
                         <td
-                            >{(parseFloat(miner_hashrate_obj) / 1000 ** 2).toFixed(2)}
-                            <span class="text-xs">MH/s</span>
+                            >{(parseFloat(miner_hashrate_obj) / hashrate_display.multiplier).toFixed(2)}
+                            <span class="text-xs">{hashrate_display.unit_short_name}</span>
                         </td>
                     </tr>
                     <tr>
@@ -99,9 +102,9 @@ export let block_reward = SCD_BLOCK_REWARD
                                 {#if miner_share_obj.invalid + miner_share_obj.stale === 0}
                                     100%
                                 {:else}
-                                    {((miner_share_obj.invalid + miner_share_obj.stale) /
-                                        miner_share_obj.valid) *
-                                        100}
+
+                                {(miner_share_obj.valid / (miner_share_obj.invalid + miner_share_obj.stale + miner_share_obj.valid)).toFixed(3)}
+
                                 {/if}
                             {:else}
                                 Not enough data
