@@ -34,6 +34,7 @@ let hashrate_obj
 // Calculate average hashrate over last 5 entries in /historical
 last_5_historical = historical?.slice(-5)
 
+console.log(SCD_POOL_SHARED)
 last_5_historical?.map((obj) => {
     if (SCD_POOL_SHARED) {
         hashrate_obj = obj.hashrate.shared
@@ -83,9 +84,18 @@ let seconds_since_last_block = differenceInSeconds(
                     <th>Hashrate</th>
                     <!-- convert hash to megahash by dividing by 1 mil -->
                     <!-- TODO: add env var for unit -->
-                    <td class="font-bold italic">
+
+                    <!-- NOTE: REMVOED AVERAGING! AVEraging code is still there
+                    elsewhere, just not used! -->
+
+                    <!--<td class="font-bold italic">
                         {(avg_hashrate / 1000 ** 2).toFixed(2) + ' ' + hashrate_display.unit_short_name}
+                    </td>-->
+
+                    <td class="font-bold italic">
+                      {(stats?.hashrate.solo / 1000 ** 2).toFixed(2) + ' ' + hashrate_display.unit_short_name}
                     </td>
+
                 </tr>
                 <!-- Hide if no hashrate to avoid displaying a worker count from shared pool when
                      looking at a solo pool -->
