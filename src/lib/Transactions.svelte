@@ -8,6 +8,7 @@
     const {
         SCD_TX_EXPLORER_URL,
         SCD_SUPPORT_EMAIL,
+        SCD_ENABLE_TRANSACTIONS_TAB,
     } = $appSettingsStore
 
     let pathname = $page.url.pathname.split('/')[3]

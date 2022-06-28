@@ -37,6 +37,7 @@ if (!SCD_POOL_SHARED) {
             <h2 class="inline-block text-xl font-bold sm:text-2xl">My Workers</h2>
         </a>
 
+<!--
         <a
             sveltekit:prefetch
             sveltekit:noscroll
@@ -48,6 +49,7 @@ if (!SCD_POOL_SHARED) {
                 My Transactions
             </h2>
         </a>
+        -->
     </div>
 
     {#if Object.keys(my_workers)?.length === 0}
